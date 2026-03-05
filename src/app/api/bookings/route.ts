@@ -11,8 +11,9 @@ export async function GET() {
       include: { attendee: true, event: true },
     });
     return NextResponse.json(bookings);
-  } catch (e: any) {
-    return NextResponse.json({ error: e.message }, { status: 500 });
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : "something went wrong";
+    return NextResponse.json({ error: msg }, { status: 500 });
   }
 }
 
@@ -166,7 +167,8 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json({ booking, status, waitlist_position });
-  } catch (e: any) {
-    return NextResponse.json({ error: e.message }, { status: 500 });
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : "something went wrong";
+    return NextResponse.json({ error: msg }, { status: 500 });
   }
 }

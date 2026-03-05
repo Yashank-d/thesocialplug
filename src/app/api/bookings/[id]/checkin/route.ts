@@ -12,7 +12,8 @@ export async function PUT(
       data: { status: "checked_in", checked_in_at: new Date() },
     });
     return NextResponse.json(booking);
-  } catch (e: any) {
-    return NextResponse.json({ error: e.message }, { status: 500 });
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : "something went wrong";
+    return NextResponse.json({ error: msg }, { status: 500 });
   }
 }

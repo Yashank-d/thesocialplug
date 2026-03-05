@@ -8,8 +8,9 @@ export async function GET() {
       include: { _count: { select: { bookings: true } } },
     });
     return NextResponse.json(events);
-  } catch (e: any) {
-    return NextResponse.json({ error: e.message }, { status: 500 });
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : "something went wrong";
+    return NextResponse.json({ error: msg }, { status: 500 });
   }
 }
 
@@ -47,13 +48,19 @@ export async function POST(req: Request) {
       },
     });
     return NextResponse.json(event);
-  } catch (e: any) {
-    if (e?.code === "P2002") {
+  } catch (e) {
+    if (
+      typeof e === "object" &&
+      e !== null &&
+      "code" in e &&
+      e.code === "P2002"
+    ) {
       return NextResponse.json(
         { error: "slug already exists" },
         { status: 400 },
       );
     }
-    return NextResponse.json({ error: e.message }, { status: 500 });
+    const msg = e instanceof Error ? e.message : "something went wrong";
+    return NextResponse.json({ error: msg }, { status: 500 });
   }
 }

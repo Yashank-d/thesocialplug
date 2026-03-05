@@ -20,8 +20,9 @@ export async function GET(
     if (!event)
       return NextResponse.json({ error: "not found" }, { status: 404 });
     return NextResponse.json(event);
-  } catch (e: any) {
-    return NextResponse.json({ error: e.message }, { status: 500 });
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : "something went wrong";
+    return NextResponse.json({ error: msg }, { status: 500 });
   }
 }
 
@@ -41,8 +42,9 @@ export async function PUT(
       },
     });
     return NextResponse.json(event);
-  } catch (e: any) {
-    return NextResponse.json({ error: e.message }, { status: 500 });
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : "something went wrong";
+    return NextResponse.json({ error: msg }, { status: 500 });
   }
 }
 
@@ -54,7 +56,8 @@ export async function DELETE(
     const { id } = await params;
     await prisma.event.delete({ where: { id } });
     return NextResponse.json({ success: true });
-  } catch (e: any) {
-    return NextResponse.json({ error: e.message }, { status: 500 });
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : "something went wrong";
+    return NextResponse.json({ error: msg }, { status: 500 });
   }
 }
