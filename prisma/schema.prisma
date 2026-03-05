@@ -1,0 +1,79 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum EventStatus {
+  draft
+  active
+  completed
+}
+
+enum BookingStatus {
+  confirmed
+  waitlist
+  cancelled
+  checked_in
+}
+
+enum TeamRole {
+  admin
+  team
+}
+
+enum WaitlistMode {
+  auto
+  closed
+}
+
+model Event {
+  id               String       @id @default(uuid())
+  title            String
+  description      String?
+  location         String
+  city             String       @default("Bangalore")
+  date_time        DateTime
+  capacity         Int
+  status           EventStatus  @default(draft)
+  waitlist_mode    WaitlistMode @default(auto)
+  slug             String       @unique
+  cover_image      String?
+  created_at       DateTime     @default(now())
+  bookings         Booking[]
+}
+
+model Attendee {
+  id         String    @id @default(uuid())
+  name       String
+  email      String    @unique
+  instagram  String?
+  city       String?
+  notes      String?
+  created_at DateTime  @default(now())
+  bookings   Booking[]
+}
+
+model Booking {
+  id               String        @id @default(uuid())
+  event_id         String
+  attendee_id      String
+  status           BookingStatus @default(confirmed)
+  waitlist_position Int?
+  qr_token         String        @unique @default(uuid())
+  booked_at        DateTime      @default(now())
+  checked_in_at    DateTime?
+  event            Event         @relation(fields: [event_id], references: [id], onDelete: Cascade)
+  attendee         Attendee      @relation(fields: [attendee_id], references: [id], onDelete: Cascade)
+}
+
+model TeamMember {
+  id         String   @id @default(uuid())
+  email      String   @unique
+  name       String
+  role       TeamRole @default(team)
+  created_at DateTime @default(now())
+}
