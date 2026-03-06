@@ -13,9 +13,9 @@ export default async function EventsPage() {
     <div className="relative min-h-screen flex flex-col items-center py-12 px-4 md:p-8 bg-[#0D0D0D] overflow-hidden">
       {/* Animated Background Orbs */}
       <div className="orb-container">
-        <div className="orb orb-red w-[500px] h-[500px] top-[-10%] left-[-10%]"></div>
-        <div className="orb orb-blue w-[600px] h-[600px] bottom-[10%] right-[-20%] opacity-40" style={{ animationDelay: '-10s' }}></div>
-        <div className="orb orb-accent w-[300px] h-[300px] top-[30%] left-[20%] opacity-20" style={{ animationDelay: '-5s' }}></div>
+        <div className="orb orb-red w-125 h-125 top-[-10%] left-[-10%]"></div>
+        <div className="orb orb-blue w-150 h-150 bottom-[10%] right-[-20%] opacity-40" style={{ animationDelay: '-10s' }}></div>
+        <div className="orb orb-accent w-75 h-75 top-[30%] left-[20%] opacity-20" style={{ animationDelay: '-5s' }}></div>
       </div>
 
       <div className="w-full max-w-md relative z-10">
@@ -50,18 +50,18 @@ export default async function EventsPage() {
               <Link
                 key={event.id}
                 href={`/events/${event.slug}`}
-                className="block glass-panel rounded-[2rem] hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.6)] hover:border-white/[0.15] transition-all duration-300 group"
+                className="block glass-panel rounded-4xl hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.6)] hover:border-white/15 transition-all duration-300 group"
               >
                 <div className="p-8 flex flex-col">
                   {/* Top: Title */}
-                  <h2 className="text-3xl md:text-4xl font-black font-seasons tracking-tighter uppercase mb-6 break-words group-hover:text-accent transition-colors">
+                  <h2 className="text-3xl md:text-4xl font-black font-seasons tracking-tighter uppercase mb-6 wrap-break-word group-hover:text-accent transition-colors">
                     {event.title}
                   </h2>
                   
                   {/* Stats line */}
                   <div className="flex justify-between items-end border-t border-white/5 pt-5 relative">
                     {/* Subtle glow on hover */}
-                    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/0 group-hover:via-accent/30 to-transparent transition-all duration-500"></div>
+                    <div className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-accent/0 group-hover:via-accent/30 to-transparent transition-all duration-500"></div>
                     
                     <div className="flex flex-col gap-1.5 text-xs font-semibold tracking-wide text-light/70 uppercase">
                       <span className="text-light">{new Date(event.date_time).toLocaleDateString("en-IN", {
