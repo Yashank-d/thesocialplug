@@ -81,7 +81,7 @@ export default async function AttendeesPage({
                 )}
               </div>
             </div>
-            <div className="mt-5 md:mt-0 text-[9px] font-bold tracking-[0.2em] text-light/60 bg-white/5 px-4 py-2 rounded-full shrink-0 uppercase border border-white/10 backdrop-blur-sm shadow-sm md:self-start md:mt-2">
+            <div className="mt-3 md:mt-0 text-[9px] font-bold tracking-[0.2em] text-light/60 bg-white/5 px-4 py-2 rounded-full shrink-0 uppercase border border-white/10 backdrop-blur-sm shadow-sm self-start">
               <span className="text-accent">{a._count.bookings}</span> EVENT{a._count.bookings !== 1 ? "S" : ""}
             </div>
           </Link>

@@ -13,7 +13,19 @@ export default async function EventPage({
 
   const event = await prisma.event.findUnique({
     where: { slug },
-    include: { _count: { select: { bookings: true } } },
+    include: { 
+      _count: { 
+        select: { 
+          bookings: {
+            where: {
+              status: {
+                in: ["confirmed", "waitlist"]
+              }
+            }
+          } 
+        } 
+      } 
+    },
   });
 
   if (!event || event.status === "draft") notFound();
@@ -45,11 +57,11 @@ export default async function EventPage({
         <span className="text-[10px] tracking-[0.2em] uppercase block font-bold text-light/50">irl &gt; scrolling</span>
       </div>
 
-      {/* The Glass Panel */}
-      <div className="w-full max-w-md glass-panel rounded-[2.5rem] p-8 md:p-10 relative z-10 flex flex-col">
-        {/* Top Section - Large Title */}
-        <div className="mb-10">
-          <h1 className="font-seasons text-5xl md:text-6xl font-black leading-none tracking-tighter uppercase mb-8 break-words text-light drop-shadow-lg">
+      {/* The Ticket — single seamless card, no outer border */}
+      <div className="w-full max-w-md bg-white/[0.03] backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.5)] rounded-[2.5rem] relative z-10 overflow-visible">
+        {/* Top Section - Event Info */}
+        <div className="p-8 md:p-10 pb-6">
+          <h1 className="font-seasons text-3xl md:text-5xl font-black leading-none tracking-tighter uppercase mb-8 break-words text-light drop-shadow-lg">
             {event.title}
           </h1>
           
@@ -93,14 +105,21 @@ export default async function EventPage({
           )}
         </div>
 
-        {/* Divider */}
-        <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent w-full mb-10"></div>
+        {/* Perforated Tear Line — inside the card */}
+        <div className="relative h-0 flex items-center mx-0 my-4">
+          {/* Left notch — semicircle cutting into the card */}
+          <div className="absolute -left-[14px] w-7 h-7 rounded-full bg-[#0D0D0D] z-20 shadow-[inset_-2px_0_4px_rgba(255,255,255,0.05)]"></div>
+          {/* Right notch */}
+          <div className="absolute -right-[14px] w-7 h-7 rounded-full bg-[#0D0D0D] z-20 shadow-[inset_2px_0_4px_rgba(255,255,255,0.05)]"></div>
+          {/* Dashed line */}
+          <div className="w-full border-t-2 border-dashed border-accent/25 mx-5"></div>
+        </div>
 
-        {/* Bottom Section - Booking Form Wrapper */}
-        <div className="pt-2">
+        {/* Bottom Section - Form (accent background, dark text) */}
+        <div className="p-8 md:p-10 pt-6 bg-accent rounded-b-[2.5rem] text-dark">
           {isClosed ? (
-            <div className="text-center py-6 glass-panel rounded-2xl">
-              <p className="text-xs font-bold tracking-[0.2em] text-light/40 uppercase">
+            <div className="text-center py-6">
+              <p className="text-xs font-bold tracking-[0.2em] text-dark/60 uppercase">
                 Bookings Closed
               </p>
             </div>

@@ -12,8 +12,10 @@
   "dependencies": {
     "@prisma/adapter-pg": "^7.4.2",
     "@prisma/client": "^7.4.2",
+    "@radix-ui/react-portal": "^1.1.10",
     "@supabase/ssr": "^0.9.0",
     "@supabase/supabase-js": "^2.98.0",
+    "gsap": "^3.14.2",
     "html5-qrcode": "^2.3.8",
     "next": "16.1.6",
     "nodemailer": "^8.0.1",

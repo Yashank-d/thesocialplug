@@ -35,10 +35,22 @@ export async function POST(req: Request) {
       );
     }
 
-    // Get event with booking count
+    // Get event with active booking count (ignore cancelled)
     const event = await prisma.event.findUnique({
       where: { id: event_id },
-      include: { _count: { select: { bookings: true } } },
+      include: { 
+        _count: { 
+          select: { 
+            bookings: {
+              where: {
+                status: {
+                  in: ["confirmed", "waitlist"]
+                }
+              }
+            } 
+          } 
+        } 
+      },
     });
 
     if (!event)

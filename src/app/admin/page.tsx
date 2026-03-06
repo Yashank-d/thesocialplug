@@ -1,7 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { requireAdmin } from "@/lib/auth";
-import Image from "next/image";
 
 export default async function AdminPage() {
   await requireAdmin();
@@ -22,10 +21,7 @@ export default async function AdminPage() {
     <div className="uppercase font-inter">
       <div className="mb-12 border-b border-white/10 pb-6 relative">
         <h1 className="text-4xl font-black font-seasons tracking-tighter text-light drop-shadow-md">DASHBOARD</h1>
-        <div className="flex items-center gap-2 mt-3 mb-1">
-          <Image src="/logo.svg" alt="thesocialplug." width={90} height={34} className="h-4 w-auto opacity-70 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]" />
-          <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-accent leading-none pt-1">ADMIN PORTAL</p>
-        </div>
+        <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-accent leading-none mt-3 mb-1">ADMIN PORTAL</p>
       </div>
 
       {/* Stats */}
