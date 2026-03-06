@@ -1,7 +1,9 @@
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
+import { getRole } from "@/lib/auth";
 
 export default async function EventsPage() {
+  const role = await getRole();
   const events = await prisma.event.findMany({
     orderBy: { date_time: "desc" },
     include: { _count: { select: { bookings: true } } },
@@ -11,20 +13,15 @@ export default async function EventsPage() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-xl font-bold">events</h1>
-        <Link
-          href="/admin/events/new"
-          className="text-xs bg-black text-white px-3 py-1.5 rounded-lg"
-        >
-          + new event
-        </Link>
+        {role === "admin" && (
+          <Link
+            href="/admin/events/new"
+            className="text-xs bg-black text-white px-3 py-1.5 rounded-lg"
+          >
+            + new event
+          </Link>
+        )}
       </div>
-
-      {events.length === 0 && (
-        <div className="bg-white border border-gray-100 rounded-xl p-8 text-center">
-          <p className="text-sm text-gray-400">no events yet.</p>
-        </div>
-      )}
-
       <div className="flex flex-col gap-2">
         {events.map((event) => (
           <Link
