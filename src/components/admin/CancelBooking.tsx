@@ -6,14 +6,17 @@ import { useRouter } from "next/navigation";
 export default function CancelBooking({
   bookingId,
   status,
+  visible,
 }: {
   bookingId: string;
   status: string;
+  visible: boolean;
 }) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  if (status === "cancelled" || status === "checked_in") return null;
+  if (!visible || status === "cancelled" || status === "checked_in")
+    return null;
 
   async function handleCancel() {
     if (!confirm("cancel this booking? waitlist will be auto-promoted."))

@@ -4,6 +4,7 @@ import Link from "next/link";
 import EventStatusControl from "@/components/admin/EventStatusControl";
 import ManualBooking from "@/components/admin/ManualBooking";
 import CancelBooking from "@/components/admin/CancelBooking";
+import { getRole } from "@/lib/auth";
 
 export default async function EventDetailPage({
   params,
@@ -11,6 +12,7 @@ export default async function EventDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+  const role = await getRole();
   const event = await prisma.event.findUnique({
     where: { id },
     include: {
@@ -98,10 +100,12 @@ export default async function EventDetailPage({
       </div>
 
       {/* Manual booking */}
-      <div className="bg-white border border-gray-100 rounded-xl p-4 mb-4">
-        <p className="text-xs text-gray-400 mb-3">add attendee manually</p>
-        <ManualBooking eventId={id} />
-      </div>
+      {role === "admin" && (
+        <div className="bg-white border border-gray-100 rounded-xl p-4 mb-4">
+          <p className="text-xs text-gray-400 mb-3">add attendee manually</p>
+          <ManualBooking eventId={id} />
+        </div>
+      )}
 
       {/* Bookings */}
       <div className="mb-3 flex items-center justify-between">
@@ -148,7 +152,11 @@ export default async function EventDetailPage({
               >
                 {booking.status}
               </span>
-              <CancelBooking bookingId={booking.id} status={booking.status} />
+              <CancelBooking
+                bookingId={booking.id}
+                status={booking.status}
+                visible={role === "admin"}
+              />
             </div>
           </div>
         ))}
