@@ -1,8 +1,14 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
+import nodemailer from "nodemailer";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_APP_PASSWORD,
+  },
+});
 
 export async function PUT(
   _: Request,
@@ -23,6 +29,55 @@ export async function PUT(
       where: { id },
       data: { status: "cancelled" },
     });
+
+    // Email the cancelled attendee
+    try {
+      const dateStr = new Date(booking.event.date_time).toLocaleDateString(
+        "en-IN",
+        {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        },
+      );
+
+      await transporter.sendMail({
+        from: `"thesocialplug." <${process.env.GMAIL_USER}>`,
+        to: booking.attendee.email,
+        subject: `booking cancelled — ${booking.event.title}`,
+        html: `
+          <div style="font-family:sans-serif;max-width:480px;margin:0 auto;padding:32px;color:#111;">
+            <p style="font-size:18px;font-weight:700;margin:0 0 4px;">thesocialplug.</p>
+            <p style="font-size:12px;color:#999;margin:0 0 32px;">irl > scrolling</p>
+
+            <p style="font-size:22px;font-weight:700;margin:0 0 8px;">your booking was cancelled.</p>
+            <p style="font-size:14px;color:#666;margin:0 0 24px;">
+              hey ${booking.attendee.name}, your spot for the event below has been cancelled by the organiser.
+            </p>
+
+            <div style="border:1px solid #eee;border-radius:12px;padding:20px;margin-bottom:24px;">
+              <p style="font-size:11px;color:#999;letter-spacing:1px;margin:0 0 12px;">EVENT</p>
+              <p style="font-size:15px;font-weight:600;margin:0 0 8px;">${booking.event.title}</p>
+              <p style="font-size:13px;color:#666;margin:0 0 4px;">📍 ${booking.event.location}, ${booking.event.city}</p>
+              <p style="font-size:13px;color:#666;margin:0;">📅 ${dateStr}</p>
+            </div>
+
+            <p style="font-size:13px;color:#666;margin:0 0 24px;">
+              if you think this was a mistake, reach out to us on instagram.
+            </p>
+
+            <p style="font-size:12px;color:#999;margin:0;">
+              thesocialplug. · bangalore · irl > scrolling
+            </p>
+          </div>
+        `,
+      });
+    } catch (emailErr) {
+      console.error("cancellation email failed:", emailErr);
+    }
 
     // If confirmed, promote first waitlist person
     if (booking.status === "confirmed") {
@@ -52,8 +107,8 @@ export async function PUT(
           });
           const qrImageUrl = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${nextInLine.qr_token}`;
 
-          await resend.emails.send({
-            from: "thesocialplug. <onboarding@resend.dev>",
+          await transporter.sendMail({
+            from: `"thesocialplug." <${process.env.GMAIL_USER}>`,
             to: nextInLine.attendee.email,
             subject: `you're in — ${nextInLine.event.title}`,
             html: `

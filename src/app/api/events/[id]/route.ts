@@ -1,5 +1,14 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
+import nodemailer from "nodemailer";
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_APP_PASSWORD,
+  },
+});
 
 export async function GET(
   _: Request,
@@ -81,8 +90,6 @@ export async function PUT(
 
           // Send promotion email
           try {
-            const { Resend } = await import("resend");
-            const resend = new Resend(process.env.RESEND_API_KEY);
             const dateStr = new Date(event.date_time).toLocaleDateString(
               "en-IN",
               {
@@ -96,8 +103,8 @@ export async function PUT(
             );
             const qrImageUrl = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${booking.qr_token}`;
 
-            await resend.emails.send({
-              from: "thesocialplug. <onboarding@resend.dev>",
+            await transporter.sendMail({
+              from: `"thesocialplug." <${process.env.GMAIL_USER}>`,
               to: booking.attendee.email,
               subject: `you're in — ${event.title}`,
               html: `

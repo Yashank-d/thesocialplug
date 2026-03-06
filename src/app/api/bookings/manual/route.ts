@@ -1,8 +1,14 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
+import nodemailer from "nodemailer";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_APP_PASSWORD,
+  },
+});
 
 export async function POST(req: Request) {
   try {
@@ -57,8 +63,8 @@ export async function POST(req: Request) {
       });
       const qrImageUrl = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${booking.qr_token}`;
 
-      await resend.emails.send({
-        from: "thesocialplug. <onboarding@resend.dev>",
+      await transporter.sendMail({
+        from: `"thesocialplug." <${process.env.GMAIL_USER}>`,
         to: email,
         subject: `you're in — ${event.title}`,
         html: `
