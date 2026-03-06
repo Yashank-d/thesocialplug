@@ -1,8 +1,10 @@
 import { prisma } from "@/lib/prisma";
 import AddTeamMember from "@/components/admin/AddTeamMember";
 import RemoveTeamMember from "@/components/admin/RemoveTeamMember";
+import { requireAdmin } from "@/lib/auth";
 
 export default async function TeamPage() {
+  await requireAdmin();
   const team = await prisma.teamMember.findMany({
     orderBy: { created_at: "asc" },
   });

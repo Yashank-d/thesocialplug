@@ -1,7 +1,9 @@
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
+import { requireAdmin } from "@/lib/auth";
 
 export default async function AdminPage() {
+  await requireAdmin();
   const [eventCount, attendeeCount, bookingCount] = await Promise.all([
     prisma.event.count(),
     prisma.attendee.count(),

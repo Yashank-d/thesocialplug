@@ -4,16 +4,20 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
-const links = [
+const adminLinks = [
   { label: "events", href: "/admin/events" },
   { label: "attendees", href: "/admin/attendees" },
   { label: "team", href: "/admin/team" },
 ];
 
-export default function AdminNav() {
+const teamLinks = [{ label: "events", href: "/admin/events" }];
+
+export default function AdminNav({ role }: { role: string }) {
   const pathname = usePathname();
   const router = useRouter();
   const supabase = createClient();
+
+  const links = role === "team" ? teamLinks : adminLinks;
 
   async function signOut() {
     await supabase.auth.signOut();

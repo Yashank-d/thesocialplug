@@ -1,12 +1,14 @@
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import AttendeeSearch from "@/components/admin/AttendeeSearch";
+import { requireAdmin } from "@/lib/auth";
 
 export default async function AttendeesPage({
   searchParams,
 }: {
   searchParams: Promise<{ search?: string }>;
 }) {
+  await requireAdmin();
   const { search } = await searchParams;
   const q = search || "";
 

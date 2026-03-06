@@ -2,12 +2,14 @@ import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import AttendeeNotes from "@/components/admin/AttendeeNotes";
+import { requireAdmin } from "@/lib/auth";
 
 export default async function AttendeeDetailPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
+  await requireAdmin();
   const { id } = await params;
   const attendee = await prisma.attendee.findUnique({
     where: { id },
