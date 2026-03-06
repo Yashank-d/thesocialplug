@@ -29,7 +29,7 @@ export default async function AdminPage() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16 relative z-10">
+      <div className="grid grid-cols-3 gap-4 md:gap-6 mb-16 relative z-10">
         {[
           { label: "TOTAL EVENTS", value: eventCount },
           { label: "ATtendees", value: attendeeCount },
