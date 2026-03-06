@@ -5,7 +5,6 @@ import { prisma } from "@/lib/prisma";
 
 export default async function AdminLayout({
   children,
-  params,
 }: {
   children: React.ReactNode;
   params: unknown;
