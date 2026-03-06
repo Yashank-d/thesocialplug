@@ -55,12 +55,22 @@ export default async function EventDetailPage({
             · {event.location}
           </p>
         </div>
-        <Link
-          href={`/admin/events/${id}/checkin`}
-          className="text-xs bg-black text-white px-3 py-1.5 rounded-lg shrink-0"
-        >
-          check-in →
-        </Link>
+        <div className="flex items-center gap-2 shrink-0">
+          {role === "admin" && (
+            <Link
+              href={`/admin/events/${id}/edit`}
+              className="text-xs border border-gray-200 px-3 py-1.5 rounded-lg text-gray-500 hover:bg-gray-50"
+            >
+              edit
+            </Link>
+          )}
+          <Link
+            href={`/admin/events/${id}/checkin`}
+            className="text-xs bg-black text-white px-3 py-1.5 rounded-lg"
+          >
+            check-in →
+          </Link>
+        </div>
       </div>
 
       {/* Stats */}
