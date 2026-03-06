@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import Image from "next/image";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -20,7 +21,7 @@ export default function LoginPage() {
       password,
     });
     if (error) {
-      setError(error.message);
+      setError("invalid email or password.");
       setLoading(false);
       return;
     }
@@ -29,21 +30,73 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="w-full max-w-sm">
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold tracking-tight">thesocialplug.</h1>
-          <p className="text-sm text-gray-500 mt-1">admin</p>
+    <div
+      style={{
+        minHeight: "100vh",
+        background: "var(--dark)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "24px",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
+      {/* Acid green glow */}
+      <div
+        style={{
+          position: "absolute",
+          top: "30%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          width: "480px",
+          height: "480px",
+          background:
+            "radial-gradient(circle, rgba(198,255,0,0.12) 0%, transparent 70%)",
+          pointerEvents: "none",
+        }}
+      />
+
+      {/* Form container */}
+      <div
+        style={{
+          width: "100%",
+          maxWidth: "360px",
+          position: "relative",
+          zIndex: 1,
+        }}
+      >
+        {/* Brand */}
+        {/* Brand */}
+        <div style={{ textAlign: "center", marginBottom: "40px" }}>
+          <Image
+            src="/logo.svg"
+            alt="thesocialplug."
+            width={220}
+            height={83}
+            priority
+          />
         </div>
 
-        <div className="flex flex-col gap-3">
+        {/* Inputs */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
           <input
             type="email"
             placeholder="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleLogin()}
-            className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm outline-none focus:border-gray-400 transition-colors"
+            style={{
+              width: "100%",
+              padding: "13px 16px",
+              borderRadius: "12px",
+              border: "1px solid rgba(255,255,255,0.08)",
+              background: "rgba(255,255,255,0.05)",
+              color: "var(--light)",
+              fontFamily: "var(--font-syne)",
+              fontSize: "14px",
+              outline: "none",
+            }}
           />
           <input
             type="password"
@@ -51,15 +104,51 @@ export default function LoginPage() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleLogin()}
-            className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm outline-none focus:border-gray-400 transition-colors"
+            style={{
+              width: "100%",
+              padding: "13px 16px",
+              borderRadius: "12px",
+              border: "1px solid rgba(255,255,255,0.08)",
+              background: "rgba(255,255,255,0.05)",
+              color: "var(--light)",
+              fontFamily: "var(--font-syne)",
+              fontSize: "14px",
+              outline: "none",
+            }}
           />
-          {error && <p className="text-red-500 text-xs">{error}</p>}
+
+          {error && (
+            <p
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: "11px",
+                color: "#ff6b6b",
+                marginTop: "2px",
+              }}
+            >
+              {error}
+            </p>
+          )}
+
           <button
             onClick={handleLogin}
             disabled={loading}
-            className="w-full bg-black text-white rounded-lg py-3 text-sm font-medium hover:bg-gray-800 transition-colors disabled:opacity-50 cursor-pointer"
+            style={{
+              width: "100%",
+              padding: "14px",
+              borderRadius: "12px",
+              border: "none",
+              background: loading ? "rgba(198,255,0,0.5)" : "var(--accent)",
+              color: "var(--dark)",
+              fontFamily: "var(--font-syne)",
+              fontSize: "14px",
+              fontWeight: 700,
+              cursor: loading ? "not-allowed" : "pointer",
+              marginTop: "4px",
+              transition: "opacity 0.15s ease",
+            }}
           >
-            {loading ? "signing in..." : "sign in"}
+            {loading ? "signing in..." : "sign in →"}
           </button>
         </div>
       </div>
