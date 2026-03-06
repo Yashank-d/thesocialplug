@@ -2,6 +2,8 @@ import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import EventStatusControl from "@/components/admin/EventStatusControl";
+import ManualBooking from "@/components/admin/ManualBooking";
+import CancelBooking from "@/components/admin/CancelBooking";
 
 export default async function EventDetailPage({
   params,
@@ -95,6 +97,12 @@ export default async function EventDetailPage({
         </div>
       </div>
 
+      {/* Manual booking */}
+      <div className="bg-white border border-gray-100 rounded-xl p-4 mb-4">
+        <p className="text-xs text-gray-400 mb-3">add attendee manually</p>
+        <ManualBooking eventId={id} />
+      </div>
+
       {/* Bookings */}
       <div className="mb-3 flex items-center justify-between">
         <h2 className="text-sm font-medium">bookings</h2>
@@ -126,19 +134,22 @@ export default async function EventDetailPage({
                   ` · @${booking.attendee.instagram}`}
               </div>
             </div>
-            <span
-              className={`text-xs px-2 py-0.5 rounded-full ${
-                booking.status === "checked_in"
-                  ? "bg-green-50 text-green-600"
-                  : booking.status === "confirmed"
-                    ? "bg-blue-50 text-blue-600"
-                    : booking.status === "waitlist"
-                      ? "bg-yellow-50 text-yellow-600"
-                      : "bg-gray-100 text-gray-400"
-              }`}
-            >
-              {booking.status}
-            </span>
+            <div className="flex items-center gap-2 shrink-0 ml-4">
+              <span
+                className={`text-xs px-2 py-0.5 rounded-full ${
+                  booking.status === "checked_in"
+                    ? "bg-green-50 text-green-600"
+                    : booking.status === "confirmed"
+                      ? "bg-blue-50 text-blue-600"
+                      : booking.status === "waitlist"
+                        ? "bg-yellow-50 text-yellow-600"
+                        : "bg-gray-100 text-gray-400"
+                }`}
+              >
+                {booking.status}
+              </span>
+              <CancelBooking bookingId={booking.id} status={booking.status} />
+            </div>
           </div>
         ))}
       </div>
