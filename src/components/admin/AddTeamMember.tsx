@@ -45,53 +45,58 @@ export default function AddTeamMember() {
   }
 
   return (
-    <div className="flex flex-col gap-3">
-      <div className="grid grid-cols-2 gap-3">
-        <div>
-          <label className="text-xs text-gray-400 block mb-1">name</label>
+    <div className="flex flex-col gap-6 w-full">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="group">
+          <label className="text-[9px] uppercase font-bold tracking-[0.2em] text-light/50 block mb-2 pl-2 group-focus-within:text-accent transition-colors">NAME</label>
           <input
             type="text"
             value={form.name}
             onChange={(e) => set("name", e.target.value)}
-            placeholder="full name"
-            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-gray-400"
+            placeholder="FULL NAME"
+            className="glass-input rounded-2xl text-sm"
           />
         </div>
-        <div>
-          <label className="text-xs text-gray-400 block mb-1">email</label>
+        <div className="group">
+          <label className="text-[9px] uppercase font-bold tracking-[0.2em] text-light/50 block mb-2 pl-2 group-focus-within:text-accent transition-colors">EMAIL</label>
           <input
             type="email"
             value={form.email}
             onChange={(e) => set("email", e.target.value)}
-            placeholder="email"
-            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-gray-400"
+            placeholder="EMAIL ADDRESS"
+            className="glass-input rounded-2xl text-sm"
           />
         </div>
       </div>
 
-      <div>
-        <label className="text-xs text-gray-400 block mb-1">role</label>
-        <select
-          value={form.role}
-          onChange={(e) => set("role", e.target.value)}
-          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-gray-400 bg-white"
-        >
-          <option value="team">team</option>
-          <option value="admin">admin</option>
-        </select>
+      <div className="group">
+        <label className="text-[9px] uppercase font-bold tracking-[0.2em] text-light/50 block mb-2 pl-2 group-focus-within:text-accent transition-colors">ROLE</label>
+        <div className="relative">
+          <select
+            value={form.role}
+            onChange={(e) => set("role", e.target.value)}
+            className="glass-input rounded-2xl text-sm appearance-none cursor-pointer"
+          >
+            <option value="team" className="bg-dark text-light">TEAM</option>
+            <option value="admin" className="bg-dark text-light">ADMIN</option>
+          </select>
+          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-light/50">
+            <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+          </div>
+        </div>
       </div>
 
-      {error && <p className="text-red-500 text-xs">{error}</p>}
+      {error && <p className="text-red-400 font-bold tracking-widest text-xs uppercase pl-2 bg-red-500/10 p-3 rounded-xl border border-red-500/20">{error}</p>}
       {sent && (
-        <p className="text-green-500 text-xs">invite sent successfully.</p>
+        <p className="text-accent font-bold tracking-widest text-xs uppercase bg-accent/10 p-3 rounded-xl border border-accent/20 inline-block text-center shadow-[0_0_10px_rgba(198,255,0,0.1)]">INVITE SENT SUCCESSFULLY.</p>
       )}
 
       <button
         onClick={handleAdd}
         disabled={loading}
-        className="bg-black text-white rounded-lg py-2 text-xs font-medium hover:bg-gray-800 disabled:opacity-50 cursor-pointer"
+        className="text-[10px] uppercase font-bold tracking-[0.2em] bg-accent border border-accent text-dark rounded-2xl outline-none py-4 hover:shadow-[0_0_20px_rgba(198,255,0,0.3)] hover:-translate-y-0.5 transition-all disabled:opacity-50 w-full mt-2"
       >
-        {loading ? "sending invite..." : "add + send invite"}
+        {loading ? "SENDING INVITE..." : "ADD + SEND INVITE"}
       </button>
     </div>
   );

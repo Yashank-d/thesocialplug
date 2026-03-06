@@ -1,18 +1,16 @@
 import type { Metadata } from "next";
-import { Syne, Space_Mono } from "next/font/google";
+import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 
-const syne = Syne({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-syne",
-  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-inter",
   display: "swap",
 });
 
-const spaceMono = Space_Mono({
+const seasons = Playfair_Display({
   subsets: ["latin"],
-  variable: "--font-mono",
-  weight: ["400", "700"],
+  variable: "--font-seasons",
   display: "swap",
 });
 
@@ -27,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${syne.variable} ${spaceMono.variable}`}>
+    <html lang="en" className={`${inter.variable} ${seasons.variable}`}>
       <body>{children}</body>
     </html>
   );

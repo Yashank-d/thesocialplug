@@ -16,15 +16,15 @@ export default async function EditEventPage({
   if (!event) notFound();
 
   return (
-    <div className="max-w-lg">
-      <div className="mb-6">
+    <div className="max-w-[800px] mx-auto uppercase font-inter relative z-10 w-full mt-4 md:mt-12">
+      <div className="mb-10 text-center">
         <Link
           href={`/admin/events/${id}`}
-          className="text-xs text-gray-400 hover:text-gray-600 mb-2 inline-block"
+          className="text-[10px] uppercase font-bold tracking-[0.2em] text-light/50 hover:text-accent mb-6 inline-block transition-colors"
         >
-          ← back
+          ← BACK TO EVENT
         </Link>
-        <h1 className="text-xl font-bold">edit event</h1>
+        <h1 className="text-4xl md:text-5xl font-seasons font-black tracking-tighter text-light drop-shadow-md">EDIT EVENT</h1>
       </div>
       <EditEventForm event={event} />
     </div>

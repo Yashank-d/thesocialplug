@@ -10,58 +10,70 @@ export default async function EventsPage() {
   });
 
   return (
-    <div>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-xl font-bold">events</h1>
+    <div className="uppercase font-inter">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10 border-b border-white/10 pb-6 relative">
+        <h1 className="text-4xl font-seasons font-black tracking-tighter text-light drop-shadow-md">EVENTS</h1>
         {role === "admin" && (
           <Link
             href="/admin/events/new"
-            className="text-xs bg-black text-white px-3 py-1.5 rounded-lg"
+            className="text-[10px] uppercase font-bold tracking-[0.2em] bg-accent/10 border border-accent/20 text-accent px-5 py-2.5 rounded-full hover:bg-accent hover:text-dark hover:-translate-y-0.5 hover:shadow-[0_0_15px_rgba(198,255,0,0.3)] transition-all duration-300 backdrop-blur-sm shrink-0"
           >
-            + new event
+            + NEW EVENT
           </Link>
         )}
       </div>
-      <div className="flex flex-col gap-2">
+      
+      <div className="flex flex-col gap-5 relative z-10">
         {events.map((event) => (
           <Link
             key={event.id}
             href={`/admin/events/${event.id}`}
-            className="bg-white border border-gray-100 rounded-xl p-4 flex items-center justify-between hover:border-gray-200 transition-colors"
+            className="glass-panel rounded-3xl p-6 md:p-8 flex flex-col hover:border-white/[0.15] hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.6)] transition-all duration-300 group"
           >
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2">
-                <span className="text-sm font-medium truncate">
-                  {event.title}
-                </span>
-                <span
-                  className={`text-xs px-2 py-0.5 rounded-full shrink-0 ${
-                    event.status === "active"
-                      ? "bg-green-50 text-green-600"
-                      : event.status === "completed"
-                        ? "bg-gray-100 text-gray-500"
-                        : "bg-yellow-50 text-yellow-600"
-                  }`}
-                >
-                  {event.status}
-                </span>
+            <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-4 mb-3">
+                  <h2 className="text-2xl font-seasons font-black tracking-tighter uppercase truncate group-hover:text-accent transition-colors drop-shadow-sm text-light">
+                    {event.title}
+                  </h2>
+                  <span
+                    className={`text-[9px] font-bold tracking-[0.2em] px-3 py-1.5 rounded-full uppercase shrink-0 border ${
+                      event.status === "active"
+                        ? "bg-accent/10 text-accent border-accent/20 shadow-[0_0_10px_rgba(198,255,0,0.1)]"
+                        : event.status === "completed"
+                          ? "bg-white/5 text-light/40 border-white/10"
+                          : "bg-white/10 text-light border-white/20 backdrop-blur-md"
+                    }`}
+                  >
+                    {event.status}
+                  </span>
+                </div>
+                <div className="text-[10px] uppercase font-bold tracking-[0.2em] text-light/50 flex flex-wrap gap-2 items-center">
+                  <span className="text-light/70">{new Date(event.date_time).toLocaleDateString("en-IN", {
+                    month: "short",
+                    day: "2-digit",
+                    year: "2-digit",
+                  })}</span>
+                  <span className="w-1 h-1 rounded-full bg-white/20"></span>
+                  <span className="text-light/70">{new Date(event.date_time).toLocaleTimeString("en-IN", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}</span>
+                  <span className="w-1 h-1 rounded-full bg-white/20"></span>
+                  <span>{event.location}</span>
+                </div>
               </div>
-              <div className="text-xs text-gray-400 mt-0.5">
-                {new Date(event.date_time).toLocaleDateString("en-IN", {
-                  weekday: "short",
-                  month: "short",
-                  day: "numeric",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}{" "}
-                · {event.location}
+              <div className="text-[10px] font-bold tracking-[0.2em] bg-white/5 border border-white/10 text-light px-4 py-2 rounded-full shrink-0 whitespace-nowrap self-start backdrop-blur-sm shadow-sm md:mt-2">
+                <span className="text-accent">{event._count.bookings}</span> / {event.capacity} BOOKED
               </div>
-            </div>
-            <div className="text-xs text-gray-400 ml-4 shrink-0">
-              {event._count.bookings}/{event.capacity}
             </div>
           </Link>
         ))}
+        {events.length === 0 && (
+          <div className="text-center py-20 glass-panel rounded-[2rem]">
+            <p className="text-light/60 text-xs tracking-[0.2em] font-bold uppercase">NO EVENTS FOUND.</p>
+          </div>
+        )}
       </div>
     </div>
   );

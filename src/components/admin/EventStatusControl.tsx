@@ -29,16 +29,16 @@ export default function EventStatusControl({
   }
 
   return (
-    <div className="flex gap-1">
+    <div className="flex gap-2">
       {statuses.map((s) => (
         <button
           key={s}
           onClick={() => updateStatus(s)}
           disabled={loading}
-          className={`text-xs px-3 py-1 rounded-lg cursor-pointer transition-all ${
+          className={`text-[9px] uppercase font-bold tracking-[0.2em] px-4 py-2 rounded-full outline-none transition-all border ${
             status === s
-              ? "bg-black text-white"
-              : "bg-gray-100 text-gray-500 hover:bg-gray-200"
+              ? "bg-accent/10 text-accent border-accent/20 shadow-[0_0_10px_rgba(198,255,0,0.1)] backdrop-blur-md"
+              : "bg-white/5 text-light/50 border-white/10 hover:border-white/20 hover:text-light hover:-translate-y-0.5"
           }`}
         >
           {s}

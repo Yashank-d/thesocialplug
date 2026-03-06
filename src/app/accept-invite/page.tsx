@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const supabase = createClient();
 
@@ -107,29 +108,37 @@ export default function AcceptInvitePage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="w-full max-w-sm">
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold tracking-tight">thesocialplug.</h1>
-          <p className="text-sm text-gray-500 mt-1">
-            set your password to get started
+    <div className="relative min-h-screen flex items-center justify-center p-6 bg-[#0D0D0D] overflow-hidden">
+      {/* Animated Background Orbs */}
+      <div className="orb-container">
+        <div className="orb orb-accent w-[600px] h-[600px] top-[-10%] left-[-10%]"></div>
+        <div className="orb orb-accent w-[400px] h-[400px] bottom-[-20%] right-[-10%] opacity-30"></div>
+        <div className="orb orb-accent w-[500px] h-[500px] top-[40%] left-[30%] opacity-20" style={{ animationDelay: '-5s' }}></div>
+      </div>
+
+      {/* Glassmorphic Form Container */}
+      <div className="glass-panel w-full max-w-sm rounded-[2rem] p-8 md:p-10 relative z-10">
+        <div className="mb-10 flex flex-col items-center text-center">
+          <Image src="/logo.svg" alt="thesocialplug." width={180} height={68} priority className="w-auto h-12 mb-4" />
+          <p className="text-sm text-light/60 mt-1 font-seasons">
+            Set your password to get started
           </p>
         </div>
 
         {verifying && (
-          <p className="text-sm text-gray-400">verifying invite...</p>
+          <p className="text-sm text-light/40 text-center animate-pulse">verifying invite...</p>
         )}
 
         {!verifying && error && (
-          <div className="bg-red-50 border border-red-200 rounded-xl p-4">
-            <p className="text-sm text-red-600">{error}</p>
+          <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-4 mb-4 backdrop-blur-sm">
+            <p className="text-sm text-red-400 text-center">{error}</p>
           </div>
         )}
 
         {!verifying && ready && (
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-4">
             <div>
-              <label className="text-xs text-gray-400 block mb-1">
+              <label className="text-[10px] font-bold tracking-widest text-light/50 block mb-2 uppercase pl-2">
                 new password
               </label>
               <input
@@ -137,11 +146,11 @@ export default function AcceptInvitePage() {
                 placeholder="min 8 characters"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm outline-none focus:border-gray-400 transition-colors"
+                className="glass-input rounded-2xl"
               />
             </div>
             <div>
-              <label className="text-xs text-gray-400 block mb-1">
+              <label className="text-[10px] font-bold tracking-widest text-light/50 block mb-2 uppercase pl-2">
                 confirm password
               </label>
               <input
@@ -150,16 +159,16 @@ export default function AcceptInvitePage() {
                 value={confirm}
                 onChange={(e) => setConfirm(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSetPassword()}
-                className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm outline-none focus:border-gray-400 transition-colors"
+                className="glass-input rounded-2xl"
               />
             </div>
 
-            {error && <p className="text-red-500 text-xs">{error}</p>}
+            {error && <p className="text-red-400 text-xs pl-2">{error}</p>}
 
             <button
               onClick={handleSetPassword}
               disabled={loading}
-              className="w-full bg-black text-white rounded-lg py-3 text-sm font-medium hover:bg-gray-800 disabled:opacity-50 cursor-pointer mt-1"
+              className="w-full py-4 mt-4 rounded-2xl border border-accent/20 bg-accent text-dark font-seasons text-base font-bold shadow-[0_0_20px_rgba(198,255,0,0.15)] hover:shadow-[0_0_30px_rgba(198,255,0,0.3)] hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? "setting password..." : "set password & sign in"}
             </button>

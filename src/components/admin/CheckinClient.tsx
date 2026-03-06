@@ -64,107 +64,119 @@ export default function CheckinClient({ event }: { event: Event }) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen relative z-10 font-inter uppercase text-light max-w-[800px] mx-auto">
       {/* Header */}
-      <div className="bg-white border-b border-gray-100 px-4 py-3 sticky top-0 z-10">
-        <div className="flex items-center justify-between mb-1">
+      <div className="glass-panel sticky top-0 z-20 px-6 py-6 rounded-b-3xl md:rounded-3xl md:mt-6 mb-8 shadow-[0_12px_40px_rgba(0,0,0,0.4)] backdrop-blur-xl border-x-0 md:border-x border-t-0 md:border-t">
+        <div className="flex items-center justify-between mb-4">
           <Link
             href={`/admin/events/${event.id}`}
-            className="text-xs text-gray-400"
+            className="text-[10px] uppercase font-bold tracking-[0.2em] text-light/50 hover:text-accent transition-colors"
           >
-            ← back
+            ← BACK TO EVENT
           </Link>
-          <span className="text-xs text-gray-400">
-            {checkedInCount}/{bookings.length} checked in
+          <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-accent bg-accent/10 px-3 py-1.5 rounded-full border border-accent/20">
+            {checkedInCount}/{bookings.length} CHECKED IN
           </span>
         </div>
-        <h1 className="text-sm font-bold truncate">{event.title}</h1>
+        <h1 className="text-2xl font-black font-seasons tracking-tighter truncate text-light drop-shadow-sm mb-6">{event.title}</h1>
 
         {/* Mode toggle */}
-        <div className="flex gap-1 mt-3">
+        <div className="flex gap-3">
           <button
             onClick={() => setMode("list")}
-            className={`flex-1 py-2 text-xs rounded-lg cursor-pointer transition-all ${
+            className={`flex-1 py-3 text-[10px] font-bold tracking-[0.2em] rounded-full cursor-pointer transition-all border ${
               mode === "list"
-                ? "bg-black text-white"
-                : "bg-gray-100 text-gray-500"
+                ? "bg-accent text-dark border-accent shadow-[0_0_15px_rgba(198,255,0,0.3)]"
+                : "bg-white/5 text-light/60 border-white/10 hover:bg-white/10 hover:text-light"
             }`}
           >
-            manual list
+            MANUAL LIST
           </button>
           <button
             onClick={() => setMode("qr")}
-            className={`flex-1 py-2 text-xs rounded-lg cursor-pointer transition-all ${
+            className={`flex-1 py-3 text-[10px] font-bold tracking-[0.2em] rounded-full cursor-pointer transition-all border flex items-center justify-center gap-2 ${
               mode === "qr"
-                ? "bg-black text-white"
-                : "bg-gray-100 text-gray-500"
+                ? "bg-accent text-dark border-accent shadow-[0_0_15px_rgba(198,255,0,0.3)]"
+                : "bg-white/5 text-light/60 border-white/10 hover:bg-white/10 hover:text-light"
             }`}
           >
-            scan qr
+            <span>📷</span> SCAN QR
           </button>
         </div>
       </div>
 
-      <div className="px-4 py-4">
+      <div className="px-4 md:px-0 pb-12">
         {/* QR mode */}
         {mode === "qr" && (
-          <QRScanner eventId={event.id} onCheckin={handleQRCheckin} />
+          <div className="glass-panel rounded-3xl p-6 md:p-10 text-center animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <h2 className="text-[10px] uppercase font-bold tracking-[0.2em] text-light/50 mb-6 pb-4 border-b border-white/10">SCAN QR CODE</h2>
+            <QRScanner eventId={event.id} onCheckin={handleQRCheckin} />
+          </div>
         )}
 
         {/* Manual list mode */}
         {mode === "list" && (
-          <>
-            <input
-              type="text"
-              placeholder="search by name or email..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-gray-400 bg-white mb-4"
-            />
+          <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="relative mb-6 group">
+               <label className="text-[9px] uppercase font-bold tracking-[0.2em] text-light/50 block mb-2 pl-2 group-focus-within:text-accent transition-colors absolute -top-6 left-0">SEARCH</label>
+              <input
+                type="text"
+                placeholder="NAME OR EMAIL..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="glass-input rounded-2xl text-[10px] tracking-[0.2em] font-bold w-full"
+              />
+            </div>
 
-            <div className="flex flex-col gap-2 pb-8">
+            <div className="flex flex-col gap-4">
               {filtered.map((booking) => (
                 <div
                   key={booking.id}
-                  className={`bg-white border rounded-xl p-4 flex items-center justify-between ${
+                  className={`glass-panel rounded-3xl p-6 flex items-center justify-between transition-all duration-300 hover:border-white/[0.15] hover:-translate-y-0.5 hover:shadow-[0_8px_30px_rgba(0,0,0,0.4)] ${
                     booking.status === "checked_in"
-                      ? "border-green-200"
-                      : "border-gray-100"
+                      ? "border-accent/30 bg-accent/5"
+                      : "border-white/5"
                   }`}
                 >
-                  <div>
-                    <div className="text-sm font-medium">
+                  <div className="pr-4">
+                    <div className="text-xl font-seasons font-black tracking-tighter mb-1 text-light drop-shadow-sm">
                       {booking.attendee.name}
                     </div>
-                    <div className="text-xs text-gray-400 mt-0.5">
-                      {booking.attendee.email}
-                      {booking.attendee.instagram &&
-                        ` · @${booking.attendee.instagram}`}
+                    <div className="text-[9px] uppercase font-bold tracking-[0.2em] text-light/50 flex flex-wrap items-center gap-2">
+                      <span>{booking.attendee.email}</span>
+                      {booking.attendee.instagram && (
+                        <>
+                          <span className="w-1 h-1 rounded-full bg-white/20"></span>
+                          <span className="text-light/70">@{booking.attendee.instagram}</span>
+                        </>
+                      )}
                     </div>
                   </div>
                   {booking.status === "checked_in" ? (
-                    <span className="text-xs text-green-600 font-medium">
-                      ✓ in
+                    <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-accent bg-accent/10 border border-accent/20 px-4 py-2 rounded-full shadow-[0_0_10px_rgba(198,255,0,0.1)] backdrop-blur-sm shrink-0 flex items-center gap-2">
+                       <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span> IN
                     </span>
                   ) : (
                     <button
                       onClick={() => checkIn(booking.id)}
                       disabled={loading === booking.id}
-                      className="text-xs bg-black text-white px-3 py-1.5 rounded-lg cursor-pointer disabled:opacity-50"
+                      className="text-[9px] uppercase font-bold tracking-[0.2em] text-dark bg-white border border-white px-5 py-2.5 rounded-full cursor-pointer disabled:opacity-50 hover:bg-light hover:shadow-[0_0_15px_rgba(255,255,255,0.3)] transition-all shrink-0"
                     >
-                      {loading === booking.id ? "..." : "check in"}
+                      {loading === booking.id ? "..." : "CHECK IN"}
                     </button>
                   )}
                 </div>
               ))}
 
               {filtered.length === 0 && (
-                <div className="text-center py-8 text-sm text-gray-400">
-                  no results.
+                <div className="text-center py-10 glass-panel rounded-3xl border border-dashed border-white/20">
+                  <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-light/40">
+                    NO RESULTS FOUND.
+                  </p>
                 </div>
               )}
             </div>
-          </>
+          </div>
         )}
       </div>
     </div>

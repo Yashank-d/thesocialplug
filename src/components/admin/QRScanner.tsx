@@ -93,65 +93,70 @@ export default function QRScanner({
   }, []);
 
   return (
-    <div className="flex flex-col items-center w-full">
+    <div className="flex flex-col items-center w-full relative z-10 font-inter uppercase">
       {/* Always render the container div, just hide it when not scanning */}
       <div
         id="qr-scanner-container"
-        className={`w-full rounded-xl overflow-hidden ${scanning ? "block" : "hidden"}`}
+        className={`w-full rounded-2xl overflow-hidden shadow-[0_12px_40px_rgba(0,0,0,0.6)] ${scanning ? "block" : "hidden"}`}
       />
 
       {scanning && (
         <button
           onClick={stopScanner}
-          className="w-full mt-3 border border-gray-200 rounded-lg py-2.5 text-sm text-gray-500 cursor-pointer"
+          className="w-full mt-6 bg-white/5 border border-white/10 text-light/50 hover:bg-white/10 hover:text-light transition-all rounded-full py-4 text-[10px] uppercase font-bold tracking-[0.2em]"
         >
-          cancel
+          CANCEL
         </button>
       )}
 
       {loading && (
-        <div className="w-full text-center py-8">
-          <p className="text-sm text-gray-400">checking in...</p>
+        <div className="w-full text-center py-12 glass-panel rounded-3xl mt-4">
+          <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-accent animate-pulse flex items-center justify-center gap-3">
+            <span className="w-2 h-2 rounded-full bg-accent"></span> CHECKING IN...
+          </p>
         </div>
       )}
 
       {result && !loading && (
         <div
-          className={`w-full border rounded-xl p-5 mb-4 text-center ${
+          className={`w-full glass-panel rounded-3xl p-8 mb-4 text-center mt-4 transition-all duration-500 animate-in fade-in zoom-in-95 ${
             result.success
-              ? "border-green-200 bg-green-50"
+              ? "border-accent/30 shadow-[0_0_30px_rgba(198,255,0,0.15)] bg-accent/5 mt-0"
               : result.already
-                ? "border-yellow-200 bg-yellow-50"
-                : "border-red-200 bg-red-50"
+                ? "border-yellow-500/30 shadow-[0_0_30px_rgba(234,179,8,0.1)] bg-yellow-500/5 mt-0"
+                : "border-red-500/30 shadow-[0_0_30px_rgba(239,68,68,0.1)] bg-red-400/5 mt-0"
           }`}
         >
-          <div className="text-2xl mb-2">
-            {result.success ? "✅" : result.already ? "🟡" : "❌"}
+          <div className="text-4xl mb-4 drop-shadow-lg">
+            {result.success ? "✨" : result.already ? "⚠️" : "🚫"}
           </div>
           {result.attendee ? (
             <>
-              <p className="text-sm font-bold">
+              <p className={`text-2xl font-black font-seasons tracking-tighter mb-4 pb-4 border-b border-white/10 ${
+                result.success ? "text-accent" : result.already ? "text-yellow-400" : "text-red-400"
+              }`}>
                 {result.success
-                  ? "checked in!"
+                  ? "CHECKED IN!"
                   : result.already
-                    ? "already checked in"
-                    : "error"}
+                    ? "ALREADY IN"
+                    : "ERROR"}
               </p>
-              <p className="text-sm text-gray-600 mt-1">
+              <p className="text-xl font-black font-seasons tracking-tighter text-light drop-shadow-sm">
                 {result.attendee.name}
               </p>
-              <p className="text-xs text-gray-400 mt-0.5">
-                {result.attendee.email}
-              </p>
+              <div className="text-[10px] uppercase font-bold tracking-[0.2em] text-light/50 mt-2 flex flex-col gap-1 items-center">
+                <span>{result.attendee.email}</span>
+                {result.attendee.instagram && <span>@{result.attendee.instagram}</span>}
+              </div>
             </>
           ) : (
-            <p className="text-sm text-red-600">{result.error}</p>
+            <p className="text-sm font-bold tracking-[0.2em] text-red-400 mb-2 uppercase">{result.error}</p>
           )}
           <button
             onClick={reset}
-            className="mt-4 text-xs bg-black text-white px-4 py-2 rounded-lg cursor-pointer"
+            className="w-full mt-8 bg-white/5 border border-white/10 text-light hover:bg-white/10 font-bold uppercase tracking-[0.2em] text-[10px] px-6 py-4 rounded-full transition-all shadow-sm"
           >
-            scan next →
+            SCAN NEXT →
           </button>
         </div>
       )}
@@ -159,9 +164,9 @@ export default function QRScanner({
       {!scanning && !loading && !result && ready && (
         <button
           onClick={startScanner}
-          className="w-full bg-black text-white rounded-xl py-4 text-sm font-medium cursor-pointer flex items-center justify-center gap-2"
+          className="w-full bg-accent border border-accent text-dark rounded-full py-5 text-[10px] uppercase font-bold tracking-[0.2em] cursor-pointer flex items-center justify-center gap-3 hover:shadow-[0_0_20px_rgba(198,255,0,0.3)] hover:-translate-y-0.5 transition-all mt-4"
         >
-          <span>📷</span> scan qr code
+          <span className="text-lg leading-none mb-0.5">📷</span> SCAN QR CODE
         </button>
       )}
     </div>

@@ -24,10 +24,10 @@ export default function AttendeeSearch({
   return (
     <input
       type="text"
-      placeholder="search by name, email or instagram..."
+      placeholder="SEARCH BY NAME, EMAIL OR INSTAGRAM..."
       defaultValue={defaultValue}
       onChange={handleSearch}
-      className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-gray-400 transition-colors mb-4 bg-white"
+      className="glass-input rounded-2xl text-sm mb-4"
     />
   );
 }

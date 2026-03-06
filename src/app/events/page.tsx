@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
+import Image from "next/image";
 
 export default async function EventsPage() {
   const events = await prisma.event.findMany({
@@ -9,23 +10,38 @@ export default async function EventsPage() {
   });
 
   return (
-    <div className="min-h-screen bg-white">
-      <div className="max-w-lg mx-auto px-4 py-12">
-        <div className="mb-10">
-          <h1 className="text-2xl font-bold tracking-tight">thesocialplug.</h1>
-          <p className="text-sm text-gray-400 mt-1">
+    <div className="relative min-h-screen flex flex-col items-center py-12 px-4 md:p-8 bg-[#0D0D0D] overflow-hidden">
+      {/* Animated Background Orbs */}
+      <div className="orb-container">
+        <div className="orb orb-red w-[500px] h-[500px] top-[-10%] left-[-10%]"></div>
+        <div className="orb orb-blue w-[600px] h-[600px] bottom-[10%] right-[-20%] opacity-40" style={{ animationDelay: '-10s' }}></div>
+        <div className="orb orb-accent w-[300px] h-[300px] top-[30%] left-[20%] opacity-20" style={{ animationDelay: '-5s' }}></div>
+      </div>
+
+      <div className="w-full max-w-md relative z-10">
+        <div className="mb-12 flex flex-col items-center">
+          <h1 className="sr-only">thesocialplug.</h1>
+          <Image
+            src="/logo.svg"
+            alt="thesocialplug."
+            width={240}
+            height={90}
+            priority
+            className="h-10 w-auto"
+          />
+          <p className="text-xs tracking-[0.2em] text-light/50 mt-4 uppercase font-bold text-center">
             irl &gt; scrolling · bangalore
           </p>
         </div>
 
         {events.length === 0 && (
-          <div className="text-center py-16">
-            <p className="text-gray-400 text-sm">no events right now.</p>
-            <p className="text-gray-300 text-xs mt-1">check back soon.</p>
+          <div className="text-center py-16 glass-panel rounded-3xl">
+            <p className="text-light text-sm tracking-widest font-bold">NO EVENTS RIGHT NOW.</p>
+            <p className="text-light/40 text-xs mt-2 tracking-widest font-bold">CHECK BACK SOON.</p>
           </div>
         )}
 
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-6">
           {events.map((event) => {
             const spotsLeft = event.capacity - event._count.bookings;
             const isFull = spotsLeft <= 0;
@@ -34,32 +50,37 @@ export default async function EventsPage() {
               <Link
                 key={event.id}
                 href={`/events/${event.slug}`}
-                className="border border-gray-100 rounded-2xl p-5 hover:border-gray-200 transition-colors"
+                className="block glass-panel rounded-[2rem] hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.6)] hover:border-white/[0.15] transition-all duration-300 group"
               >
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex-1 min-w-0">
-                    <h2 className="text-base font-semibold truncate">
-                      {event.title}
-                    </h2>
-                    <p className="text-sm text-gray-400 mt-1">
-                      {new Date(event.date_time).toLocaleDateString("en-IN", {
-                        weekday: "short",
+                <div className="p-8 flex flex-col">
+                  {/* Top: Title */}
+                  <h2 className="text-3xl md:text-4xl font-black font-seasons tracking-tighter uppercase mb-6 break-words group-hover:text-accent transition-colors">
+                    {event.title}
+                  </h2>
+                  
+                  {/* Stats line */}
+                  <div className="flex justify-between items-end border-t border-white/5 pt-5 relative">
+                    {/* Subtle glow on hover */}
+                    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/0 group-hover:via-accent/30 to-transparent transition-all duration-500"></div>
+                    
+                    <div className="flex flex-col gap-1.5 text-xs font-semibold tracking-wide text-light/70 uppercase">
+                      <span className="text-light">{new Date(event.date_time).toLocaleDateString("en-IN", {
                         month: "short",
-                        day: "numeric",
+                        day: "2-digit",
+                      })} · {new Date(event.date_time).toLocaleTimeString("en-IN", {
                         hour: "2-digit",
                         minute: "2-digit",
-                      })}
-                    </p>
-                    <p className="text-sm text-gray-400">{event.location}</p>
-                  </div>
-                  <div className="shrink-0 text-right">
-                    {isFull ? (
-                      <span className="text-xs text-orange-500">waitlist</span>
-                    ) : (
-                      <span className="text-xs text-green-500">
-                        {spotsLeft} left
-                      </span>
-                    )}
+                      })}</span>
+                      <span>{event.location}</span>
+                    </div>
+                    
+                    <div className="text-right text-[10px] font-bold tracking-[0.15em] uppercase">
+                      {isFull ? (
+                        <span className="text-red-400 bg-red-400/10 px-3 py-1.5 rounded-full border border-red-400/20">WAITLIST</span>
+                      ) : (
+                        <span className="text-accent bg-accent/10 px-3 py-1.5 rounded-full border border-accent/20">{spotsLeft} LEFT</span>
+                      )}
+                    </div>
                   </div>
                 </div>
               </Link>

@@ -30,73 +30,37 @@ export default function LoginPage() {
   }
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "var(--dark)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "24px",
-        position: "relative",
-        overflow: "hidden",
-      }}
-    >
-      {/* Acid green glow */}
-      <div
-        style={{
-          position: "absolute",
-          top: "30%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: "480px",
-          height: "480px",
-          background:
-            "radial-gradient(circle, rgba(198,255,0,0.12) 0%, transparent 70%)",
-          pointerEvents: "none",
-        }}
-      />
+    <div className="relative min-h-screen flex items-center justify-center p-6 bg-[#0D0D0D] overflow-hidden">
+      {/* Animated Background Orbs */}
+      <div className="orb-container">
+        <div className="orb orb-accent w-[600px] h-[600px] top-[-10%] left-[-10%]"></div>
+        <div className="orb orb-accent w-[400px] h-[400px] bottom-[-20%] right-[-10%] opacity-30"></div>
+        <div className="orb orb-accent w-[500px] h-[500px] top-[40%] left-[30%] opacity-20" style={{ animationDelay: '-5s' }}></div>
+      </div>
 
-      {/* Form container */}
-      <div
-        style={{
-          width: "100%",
-          maxWidth: "360px",
-          position: "relative",
-          zIndex: 1,
-        }}
-      >
+      {/* Glassmorphic Form Container */}
+      <div className="glass-panel w-full max-w-sm rounded-[2rem] p-8 md:p-10 relative z-10">
         {/* Brand */}
-        {/* Brand */}
-        <div style={{ textAlign: "center", marginBottom: "40px" }}>
+        <div className="text-center mb-10 flex justify-center">
           <Image
             src="/logo.svg"
             alt="thesocialplug."
-            width={220}
-            height={83}
+            width={180}
+            height={68}
             priority
+            className="w-auto h-12"
           />
         </div>
 
         {/* Inputs */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+        <div className="flex flex-col gap-4">
           <input
             type="email"
             placeholder="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleLogin()}
-            style={{
-              width: "100%",
-              padding: "13px 16px",
-              borderRadius: "12px",
-              border: "1px solid rgba(255,255,255,0.08)",
-              background: "rgba(255,255,255,0.05)",
-              color: "var(--light)",
-              fontFamily: "var(--font-syne)",
-              fontSize: "14px",
-              outline: "none",
-            }}
+            className="glass-input rounded-2xl text-base"
           />
           <input
             type="password"
@@ -104,28 +68,11 @@ export default function LoginPage() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleLogin()}
-            style={{
-              width: "100%",
-              padding: "13px 16px",
-              borderRadius: "12px",
-              border: "1px solid rgba(255,255,255,0.08)",
-              background: "rgba(255,255,255,0.05)",
-              color: "var(--light)",
-              fontFamily: "var(--font-syne)",
-              fontSize: "14px",
-              outline: "none",
-            }}
+            className="glass-input rounded-2xl text-base"
           />
 
           {error && (
-            <p
-              style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: "11px",
-                color: "#ff6b6b",
-                marginTop: "2px",
-              }}
-            >
+            <p className="font-inter text-xs text-red-400 mt-1 pl-2">
               {error}
             </p>
           )}
@@ -133,20 +80,7 @@ export default function LoginPage() {
           <button
             onClick={handleLogin}
             disabled={loading}
-            style={{
-              width: "100%",
-              padding: "14px",
-              borderRadius: "12px",
-              border: "none",
-              background: loading ? "rgba(198,255,0,0.5)" : "var(--accent)",
-              color: "var(--dark)",
-              fontFamily: "var(--font-syne)",
-              fontSize: "14px",
-              fontWeight: 700,
-              cursor: loading ? "not-allowed" : "pointer",
-              marginTop: "4px",
-              transition: "opacity 0.15s ease",
-            }}
+            className="w-full py-3.5 mt-4 rounded-2xl border border-accent/20 bg-accent text-dark font-seasons text-base font-bold shadow-[0_0_20px_rgba(198,255,0,0.15)] hover:shadow-[0_0_30px_rgba(198,255,0,0.3)] hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? "signing in..." : "sign in →"}
           </button>

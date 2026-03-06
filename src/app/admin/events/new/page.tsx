@@ -50,59 +50,28 @@ export default function NewEventPage() {
   }
 
   return (
-    <div className="max-w-lg">
-      <div className="mb-6">
-        <h1 className="text-xl font-bold">new event</h1>
+    <div className="max-w-3xl mx-auto uppercase font-inter relative z-10">
+      <div className="mb-10 text-center">
+        <h1 className="text-4xl md:text-5xl font-seasons font-black tracking-tighter text-light drop-shadow-md">NEW EVENT</h1>
+        <p className="text-[10px] mt-3 uppercase tracking-[0.2em] font-bold text-accent">Setup a new IRL experience</p>
       </div>
 
-      <div className="bg-white border border-gray-100 rounded-xl p-6">
-        <div className="flex flex-col gap-4">
+      <div className="glass-panel rounded-[2.5rem] p-8 md:p-12 relative overflow-hidden">
+        {/* Subtle inner glow */}
+        <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none"></div>
+
+        <div className="flex flex-col gap-6 relative z-10">
           {[
-            {
-              key: "title",
-              label: "title",
-              type: "text",
-              placeholder: "UNO Sunday — Scene 01",
-            },
-            {
-              key: "slug",
-              label: "url slug",
-              type: "text",
-              placeholder: "uno-sunday-scene-01",
-            },
-            {
-              key: "location",
-              label: "location",
-              type: "text",
-              placeholder: "Cubbon Park",
-            },
-            {
-              key: "city",
-              label: "city",
-              type: "text",
-              placeholder: "Bangalore",
-            },
-            {
-              key: "date_time",
-              label: "date & time",
-              type: "datetime-local",
-              placeholder: "",
-            },
-            {
-              key: "capacity",
-              label: "capacity",
-              type: "number",
-              placeholder: "12",
-            },
-            {
-              key: "description",
-              label: "description",
-              type: "text",
-              placeholder: "optional",
-            },
+            { key: "title", label: "TITLE", type: "text", placeholder: "UNO SUNDAY — SCENE 01" },
+            { key: "slug", label: "URL SLUG", type: "text", placeholder: "uno-sunday-scene-01" },
+            { key: "location", label: "LOCATION", type: "text", placeholder: "CUBBON PARK" },
+            { key: "city", label: "CITY", type: "text", placeholder: "BANGALORE" },
+            { key: "date_time", label: "DATE & TIME", type: "datetime-local", placeholder: "" },
+            { key: "capacity", label: "CAPACITY", type: "number", placeholder: "12" },
+            { key: "description", label: "DESCRIPTION", type: "text", placeholder: "OPTIONAL" },
           ].map((f) => (
-            <div key={f.key}>
-              <label className="text-xs text-gray-400 block mb-1">
+            <div key={f.key} className="group">
+              <label className="text-[10px] uppercase font-bold tracking-[0.2em] text-light/50 block mb-2 pl-2 group-focus-within:text-accent transition-colors">
                 {f.label}
               </label>
               <input
@@ -110,40 +79,45 @@ export default function NewEventPage() {
                 value={form[f.key as keyof typeof form]}
                 onChange={(e) => set(f.key, e.target.value)}
                 placeholder={f.placeholder}
-                className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-gray-400 transition-colors"
+                className="glass-input rounded-2xl text-sm"
               />
             </div>
           ))}
 
-          <div>
-            <label className="text-xs text-gray-400 block mb-1">
-              when full
+          <div className="group mt-2">
+            <label className="text-[10px] uppercase font-bold tracking-[0.2em] text-light/50 block mb-2 pl-2 group-focus-within:text-accent transition-colors">
+              WHEN FULL
             </label>
-            <select
-              value={form.waitlist_mode}
-              onChange={(e) => set("waitlist_mode", e.target.value)}
-              className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-gray-400 bg-white"
-            >
-              <option value="auto">auto waitlist</option>
-              <option value="closed">close bookings</option>
-            </select>
+            <div className="relative">
+              <select
+                value={form.waitlist_mode}
+                onChange={(e) => set("waitlist_mode", e.target.value)}
+                className="glass-input rounded-2xl text-sm appearance-none cursor-pointer pr-10"
+              >
+                <option value="auto" className="bg-[#1a1a1a] text-light">AUTO WAITLIST</option>
+                <option value="closed" className="bg-[#1a1a1a] text-light">CLOSE BOOKINGS</option>
+              </select>
+              <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-light/50 text-[10px] tracking-widest font-seasons rotate-90 w-4 h-4 text-center">
+                &gt;
+              </div>
+            </div>
           </div>
 
-          {error && <p className="text-red-500 text-xs">{error}</p>}
+          {error && <p className="text-red-400 text-sm font-bold tracking-widest mt-2 pl-2 bg-red-500/10 p-4 rounded-xl border border-red-500/20">{error}</p>}
 
-          <div className="flex gap-2 pt-2">
+          <div className="flex flex-col md:flex-row gap-4 pt-8 mt-6 border-t border-white/10">
             <button
               onClick={() => router.back()}
-              className="flex-1 border border-gray-200 rounded-lg py-2.5 text-sm text-gray-500 hover:bg-gray-50 cursor-pointer"
+              className="flex-1 bg-white/5 border border-white/10 text-light tracking-[0.2em] font-bold rounded-2xl py-4 flex items-center justify-center text-xs hover:bg-white/10 hover:border-white/20 transition-all cursor-pointer shadow-sm"
             >
-              cancel
+              CANCEL
             </button>
             <button
               onClick={handleSubmit}
               disabled={loading}
-              className="flex-1 bg-black text-white rounded-lg py-2.5 text-sm font-medium hover:bg-gray-800 disabled:opacity-50 cursor-pointer"
+              className="flex-1 bg-accent border border-accent text-dark tracking-[0.2em] shadow-[0_0_20px_rgba(198,255,0,0.15)] font-bold rounded-2xl py-4 flex items-center justify-center text-xs hover:shadow-[0_0_30px_rgba(198,255,0,0.3)] hover:-translate-y-0.5 disabled:opacity-50 transition-all cursor-pointer"
             >
-              {loading ? "creating..." : "create event"}
+              {loading ? "CREATING..." : "CREATE EVENT →"}
             </button>
           </div>
         </div>
