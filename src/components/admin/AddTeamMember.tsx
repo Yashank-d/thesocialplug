@@ -8,6 +8,7 @@ export default function AddTeamMember() {
   const [form, setForm] = useState({ name: "", email: "", role: "team" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [sent, setSent] = useState(false);
 
   function set(field: string, value: string) {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -34,9 +35,13 @@ export default function AddTeamMember() {
       return;
     }
 
+    setSent(true);
     setForm({ name: "", email: "", role: "team" });
     setLoading(false);
-    router.refresh();
+    setTimeout(() => {
+      setSent(false);
+      router.refresh();
+    }, 3000);
   }
 
   return (
@@ -77,13 +82,16 @@ export default function AddTeamMember() {
       </div>
 
       {error && <p className="text-red-500 text-xs">{error}</p>}
+      {sent && (
+        <p className="text-green-500 text-xs">invite sent successfully.</p>
+      )}
 
       <button
         onClick={handleAdd}
         disabled={loading}
         className="bg-black text-white rounded-lg py-2 text-xs font-medium hover:bg-gray-800 disabled:opacity-50 cursor-pointer"
       >
-        {loading ? "adding..." : "add member"}
+        {loading ? "sending invite..." : "add + send invite"}
       </button>
     </div>
   );

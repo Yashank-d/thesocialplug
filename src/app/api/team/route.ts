@@ -1,5 +1,13 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
+import { createClient } from "@supabase/supabase-js";
+
+// Admin client — needed for inviteUserByEmail
+const supabaseAdmin = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!,
+  { auth: { autoRefreshToken: false, persistSession: false } },
+);
 
 export async function GET() {
   try {
@@ -25,9 +33,28 @@ export async function POST(req: Request) {
       );
     }
 
+    // Add to TeamMember table
     const member = await prisma.teamMember.create({
       data: { name, email, role: role || "team" },
     });
+
+    // Send Supabase invite email
+    const { error: inviteError } =
+      await supabaseAdmin.auth.admin.inviteUserByEmail(email, {
+        redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/accept-invite`,
+        data: { name, role },
+      });
+
+    console.log(
+      "invite result:",
+      inviteError ? inviteError.message : "sent ok",
+    );
+
+    if (inviteError) {
+      console.error("invite error:", inviteError);
+      // Don't fail — member is added, invite just didn't send
+    }
+
     return NextResponse.json(member);
   } catch (e) {
     if (
