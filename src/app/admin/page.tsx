@@ -7,14 +7,32 @@ export default async function AdminPage() {
   const [eventCount, attendeeCount, bookingCount] = await Promise.all([
     prisma.event.count(),
     prisma.attendee.count(),
-    prisma.booking.count(),
+    prisma.booking.count({
+      where: {
+        status: {
+          in: ["confirmed", "checked_in"],
+        },
+      },
+    }),
   ]);
 
   const upcomingEvents = await prisma.event.findMany({
     where: { status: "active", date_time: { gte: new Date() } },
     orderBy: { date_time: "asc" },
     take: 3,
-    include: { _count: { select: { bookings: true } } },
+    include: {
+      _count: {
+        select: {
+          bookings: {
+            where: {
+              status: {
+                in: ["confirmed", "checked_in"],
+              },
+            },
+          },
+        },
+      },
+    },
   });
 
   return (

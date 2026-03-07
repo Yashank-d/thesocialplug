@@ -13,15 +13,22 @@ export default async function AttendeesPage({
   const q = search || "";
 
   const attendees = await prisma.attendee.findMany({
-    where: q
-      ? {
-          OR: [
-            { name: { contains: q, mode: "insensitive" } },
-            { email: { contains: q, mode: "insensitive" } },
-            { instagram: { contains: q, mode: "insensitive" } },
-          ],
-        }
-      : undefined,
+    where: {
+      bookings: {
+        some: {
+          status: "checked_in",
+        },
+      },
+      ...(q
+        ? {
+            OR: [
+              { name: { contains: q, mode: "insensitive" } },
+              { email: { contains: q, mode: "insensitive" } },
+              { instagram: { contains: q, mode: "insensitive" } },
+            ],
+          }
+        : {}),
+    },
     orderBy: { created_at: "desc" },
     include: { _count: { select: { bookings: true } } },
   });

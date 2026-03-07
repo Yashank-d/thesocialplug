@@ -8,10 +8,14 @@ import { getRole } from "@/lib/auth";
 
 export default async function EventDetailPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ show_cancelled?: string }>;
 }) {
   const { id } = await params;
+  const { show_cancelled } = await searchParams;
+  const showCancelled = show_cancelled === "true";
   const role = await getRole();
   const event = await prisma.event.findUnique({
     where: { id },
@@ -31,6 +35,10 @@ export default async function EventDetailPage({
   );
   const waitlisted = event.bookings.filter((b) => b.status === "waitlist");
   const checkedIn = event.bookings.filter((b) => b.status === "checked_in");
+
+  const displayBookings = showCancelled
+    ? event.bookings
+    : event.bookings.filter((b) => b.status !== "cancelled");
 
   return (
     <div className="uppercase font-inter relative z-10">
@@ -128,7 +136,15 @@ export default async function EventDetailPage({
 
       {/* Bookings */}
       <div className="mb-8 border-b border-white/10 pb-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <h2 className="text-sm font-bold tracking-[0.2em] text-light/80">BOOKINGS</h2>
+        <div className="flex items-center gap-4">
+          <h2 className="text-sm font-bold tracking-[0.2em] text-light/80">BOOKINGS</h2>
+          <Link
+            href={`/admin/events/${id}?show_cancelled=${showCancelled ? 'false' : 'true'}`}
+            className="text-[9px] uppercase font-bold tracking-[0.2em] px-3 py-1.5 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 transition-colors text-light/60"
+          >
+            {showCancelled ? 'HIDE CANCELLED' : 'SHOW CANCELLED'}
+          </Link>
+        </div>
         <Link
           href={`/admin/events/${id}/checkin`}
           className="text-[10px] uppercase font-bold tracking-[0.2em] text-light/50 hover:text-accent transition-colors underline underline-offset-4"
@@ -137,14 +153,14 @@ export default async function EventDetailPage({
         </Link>
       </div>
 
-      {event.bookings.length === 0 && (
+      {displayBookings.length === 0 && (
         <div className="glass-panel rounded-3xl p-12 text-center">
           <p className="text-xs font-bold tracking-[0.2em] text-light/50 uppercase">NO BOOKINGS YET.</p>
         </div>
       )}
 
       <div className="flex flex-col gap-5 relative z-10">
-        {event.bookings.map((booking) => (
+        {displayBookings.map((booking) => (
           <div
             key={booking.id}
             className="glass-panel rounded-3xl p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between hover:border-white/[0.15] hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.6)] transition-all duration-300"
