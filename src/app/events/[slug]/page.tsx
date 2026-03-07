@@ -19,7 +19,7 @@ export default async function EventPage({
           bookings: {
             where: {
               status: {
-                in: ["confirmed", "waitlist"]
+                in: ["confirmed", "checked_in"]
               }
             }
           } 

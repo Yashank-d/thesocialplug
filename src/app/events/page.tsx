@@ -6,7 +6,19 @@ export default async function EventsPage() {
   const events = await prisma.event.findMany({
     where: { status: "active" },
     orderBy: { date_time: "asc" },
-    include: { _count: { select: { bookings: true } } },
+    include: { 
+      _count: { 
+        select: { 
+          bookings: {
+            where: {
+              status: {
+                in: ["confirmed", "checked_in"]
+              }
+            }
+          } 
+        } 
+      } 
+    },
   });
 
   return (
