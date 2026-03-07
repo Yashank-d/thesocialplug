@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import AdminNav from "@/components/admin/AdminNav";
 import { prisma } from "@/lib/prisma";
+import PageTransition from "@/components/providers/PageTransition";
 
 export default async function AdminLayout({
   children,
@@ -30,7 +31,9 @@ export default async function AdminLayout({
       </div>
 
       <AdminNav role={role} />
-      <main className="max-w-4xl mx-auto px-4 py-8 pt-32 relative z-10">{children}</main>
+      <PageTransition>
+        <main className="max-w-4xl mx-auto px-4 py-8 pt-32 relative z-10">{children}</main>
+      </PageTransition>
     </div>
   );
 }
