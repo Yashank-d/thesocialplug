@@ -3,23 +3,25 @@ import Link from "next/link";
 import { getRole } from "@/lib/auth";
 
 export default async function EventsPage() {
-  const role = await getRole();
-  const events = await prisma.event.findMany({
-    orderBy: { date_time: "desc" },
-    include: {
-      _count: {
-        select: {
-          bookings: {
-            where: {
-              status: {
-                in: ["confirmed", "checked_in"],
+  const [role, events] = await Promise.all([
+    getRole(),
+    prisma.event.findMany({
+      orderBy: { date_time: "desc" },
+      include: {
+        _count: {
+          select: {
+            bookings: {
+              where: {
+                status: {
+                  in: ["confirmed", "checked_in"],
+                },
               },
             },
           },
         },
       },
-    },
-  });
+    })
+  ]);
 
   return (
     <div className="uppercase font-inter">

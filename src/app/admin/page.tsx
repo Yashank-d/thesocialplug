@@ -25,26 +25,27 @@ export default async function AdminPage() {
     { revalidate: 60, tags: ['admin-stats'] }
   );
 
-  const { eventCount, attendeeCount, bookingCount } = await getCachedStats();
-
-  const upcomingEvents = await prisma.event.findMany({
-    where: { status: "active", date_time: { gte: new Date() } },
-    orderBy: { date_time: "asc" },
-    take: 3,
-    include: {
-      _count: {
-        select: {
-          bookings: {
-            where: {
-              status: {
-                in: ["confirmed", "checked_in"],
+  const [{ eventCount, attendeeCount, bookingCount }, upcomingEvents] = await Promise.all([
+    getCachedStats(),
+    prisma.event.findMany({
+      where: { status: "active", date_time: { gte: new Date() } },
+      orderBy: { date_time: "asc" },
+      take: 3,
+      include: {
+        _count: {
+          select: {
+            bookings: {
+              where: {
+                status: {
+                  in: ["confirmed", "checked_in"],
+                },
               },
             },
           },
         },
       },
-    },
-  });
+    })
+  ]);
 
   return (
     <div className="uppercase font-inter">

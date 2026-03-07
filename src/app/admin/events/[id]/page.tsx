@@ -16,17 +16,20 @@ export default async function EventDetailPage({
   const { id } = await params;
   const { show_cancelled } = await searchParams;
   const showCancelled = show_cancelled === "true";
-  const role = await getRole();
-  const event = await prisma.event.findUnique({
-    where: { id },
-    include: {
-      bookings: {
-        include: { attendee: true },
-        orderBy: { booked_at: "asc" },
+  
+  const [role, event] = await Promise.all([
+    getRole(),
+    prisma.event.findUnique({
+      where: { id },
+      include: {
+        bookings: {
+          include: { attendee: true },
+          orderBy: { booked_at: "asc" },
+        },
+        _count: { select: { bookings: true } },
       },
-      _count: { select: { bookings: true } },
-    },
-  });
+    })
+  ]);
 
   if (!event) notFound();
 
