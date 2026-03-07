@@ -4,6 +4,8 @@ import BookingForm from "@/components/public/BookingForm";
 import Image from "next/image";
 import Link from "next/link";
 
+export const revalidate = 60; // Cache page for 60 seconds
+
 export default async function EventPage({
   params,
 }: {

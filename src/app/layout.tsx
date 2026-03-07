@@ -3,6 +3,7 @@ import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import GSAPProvider from "@/components/providers/GSAPProvider";
 
+
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",

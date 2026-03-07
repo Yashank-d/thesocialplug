@@ -2,6 +2,8 @@ import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import Image from "next/image";
 
+export const revalidate = 60; // Cache page for 60 seconds
+
 export default async function EventsPage() {
   const events = await prisma.event.findMany({
     where: { status: "active" },

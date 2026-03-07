@@ -1,20 +1,31 @@
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { requireAdmin } from "@/lib/auth";
+import { unstable_cache } from "next/cache";
 
 export default async function AdminPage() {
   await requireAdmin();
-  const [eventCount, attendeeCount, bookingCount] = await Promise.all([
-    prisma.event.count(),
-    prisma.attendee.count(),
-    prisma.booking.count({
-      where: {
-        status: {
-          in: ["confirmed", "checked_in"],
-        },
-      },
-    }),
-  ]);
+
+  const getCachedStats = unstable_cache(
+    async () => {
+      const [events, attendees, bookings] = await Promise.all([
+        prisma.event.count(),
+        prisma.attendee.count(),
+        prisma.booking.count({
+          where: {
+            status: {
+              in: ["confirmed", "checked_in"],
+            },
+          },
+        }),
+      ]);
+      return { eventCount: events, attendeeCount: attendees, bookingCount: bookings };
+    },
+    ['admin-dashboard-stats'],
+    { revalidate: 60, tags: ['admin-stats'] }
+  );
+
+  const { eventCount, attendeeCount, bookingCount } = await getCachedStats();
 
   const upcomingEvents = await prisma.event.findMany({
     where: { status: "active", date_time: { gte: new Date() } },
