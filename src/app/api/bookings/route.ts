@@ -94,11 +94,18 @@ export async function POST(req: Request) {
       },
     });
 
-    // Check duplicate booking
+    // Check duplicate or cancelled booking
     const existing = await prisma.booking.findFirst({
       where: { event_id, attendee_id: attendee.id },
     });
+    
     if (existing) {
+      if (existing.status === "cancelled") {
+        return NextResponse.json(
+          { error: "uh oh, looks like your spot was cancelled! ✨ hit us up on ig to fix this." },
+          { status: 403 },
+        );
+      }
       return NextResponse.json(
         { error: "you have already booked this event" },
         { status: 400 },

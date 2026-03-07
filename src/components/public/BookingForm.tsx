@@ -117,7 +117,11 @@ export default function BookingForm({
         ))}
 
         {/* Error State */}
-        {error && <p className="text-red-700 font-bold font-inter mt-2 pl-2 text-sm">{error}</p>}
+        {error && (
+          <p className="text-red-700 font-bold font-inter mt-3 px-2 text-[11px] uppercase tracking-widest text-center animate-pulse">
+            {error}
+          </p>
+        )}
 
         {/* Action Button */}
         <button
