@@ -49,28 +49,51 @@ export async function PUT(
         to: booking.attendee.email,
         subject: `booking cancelled — ${booking.event.title}`,
         html: `
-          <div style="font-family:sans-serif;max-width:480px;margin:0 auto;padding:32px;color:#111;">
-            <p style="font-size:18px;font-weight:700;margin:0 0 4px;">thesocialplug.</p>
-            <p style="font-size:12px;color:#999;margin:0 0 32px;">irl > scrolling</p>
+          <div style="font-family:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width:480px; margin:0 auto; padding:32px; color:#F5F5F5; background-color:#0D0D0D; border-radius:16px;">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom:32px;">
+              <tr>
+                <td>
+                  <p style="font-size:18px; font-weight:900; margin:0; letter-spacing:-0.5px; color:#c6ff00;">the<br/>socialplug.</p>
+                </td>
+                <td align="right">
+                  <p style="font-size:10px; color:#ffffff80; margin:0; letter-spacing:2px; font-weight:700; text-transform:uppercase;">irl &gt; scrolling</p>
+                </td>
+              </tr>
+            </table>
 
-            <p style="font-size:22px;font-weight:700;margin:0 0 8px;">your booking was cancelled.</p>
-            <p style="font-size:14px;color:#666;margin:0 0 24px;">
-              hey ${booking.attendee.name}, your spot for the event below has been cancelled by the organiser.
+            <p style="font-size:24px; font-weight:800; margin:0 0 8px; text-transform:uppercase; letter-spacing:-1px;">
+              YOUR BOOKING WAS CANCELLED.
+            </p>
+            <p style="font-size:14px; color:#ffffffb3; margin:0 0 32px; line-height:1.5;">
+              Hey ${booking.attendee.name}, your spot for the event below has been cancelled by the organiser.
             </p>
 
-            <div style="border:1px solid #eee;border-radius:12px;padding:20px;margin-bottom:24px;">
-              <p style="font-size:11px;color:#999;letter-spacing:1px;margin:0 0 12px;">EVENT</p>
-              <p style="font-size:15px;font-weight:600;margin:0 0 8px;">${booking.event.title}</p>
-              <p style="font-size:13px;color:#666;margin:0 0 4px;">📍 ${booking.event.location}, ${booking.event.city}</p>
-              <p style="font-size:13px;color:#666;margin:0;">📅 ${dateStr}</p>
+            <div style="background-color:#ffffff0a; border:1px solid #ffffff1a; border-radius:16px; padding:24px; margin-bottom:24px;">
+              <p style="font-size:10px; color:#ffffff80; letter-spacing:2px; margin:0 0 12px; font-weight:700;">EVENT DETAILS</p>
+              <p style="font-size:18px; font-weight:800; margin:0 0 16px; text-transform:uppercase; letter-spacing:-0.5px; color:#c6ff00;">${booking.event.title}</p>
+              
+              <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td style="padding-bottom:12px; border-bottom:1px solid #ffffff1a;">
+                    <p style="font-size:10px; color:#ffffff80; letter-spacing:2px; margin:0 0 4px; font-weight:700; text-transform:uppercase;">Location</p>
+                    <p style="font-size:14px; color:#F5F5F5; margin:0;">${booking.event.location}, ${booking.event.city}</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding-top:12px;">
+                    <p style="font-size:10px; color:#ffffff80; letter-spacing:2px; margin:0 0 4px; font-weight:700; text-transform:uppercase;">Date & Time</p>
+                    <p style="font-size:14px; color:#F5F5F5; margin:0;">${dateStr}</p>
+                  </td>
+                </tr>
+              </table>
             </div>
 
-            <p style="font-size:13px;color:#666;margin:0 0 24px;">
-              if you think this was a mistake, reach out to us on instagram.
+            <p style="font-size:13px; color:#ffffffb3; margin:0 0 24px;">
+              If you think this was a mistake, reach out to us on instagram.
             </p>
 
-            <p style="font-size:12px;color:#999;margin:0;">
-              thesocialplug. · bangalore · irl > scrolling
+            <p style="font-size:10px; color:#ffffff4d; margin:0; text-align:center; letter-spacing:1px;">
+              THESOCIALPLUG. · BANGALORE
             </p>
           </div>
         `,
@@ -112,26 +135,56 @@ export async function PUT(
             to: nextInLine.attendee.email,
             subject: `you're in — ${nextInLine.event.title}`,
             html: `
-              <div style="font-family:sans-serif;max-width:480px;margin:0 auto;padding:32px;color:#111;">
-                <p style="font-size:18px;font-weight:700;margin:0 0 4px;">thesocialplug.</p>
-                <p style="font-size:12px;color:#999;margin:0 0 32px;">irl > scrolling</p>
-                <p style="font-size:22px;font-weight:700;margin:0 0 8px;">a spot opened up. you're in.</p>
-                <p style="font-size:14px;color:#666;margin:0 0 24px;">
-                  someone cancelled and you were first on the waitlist. see you there.
+              <div style="font-family:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width:480px; margin:0 auto; padding:32px; color:#F5F5F5; background-color:#0D0D0D; border-radius:16px;">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom:32px;">
+                  <tr>
+                    <td>
+                      <p style="font-size:18px; font-weight:900; margin:0; letter-spacing:-0.5px; color:#c6ff00;">the<br/>socialplug.</p>
+                    </td>
+                    <td align="right">
+                      <p style="font-size:10px; color:#ffffff80; margin:0; letter-spacing:2px; font-weight:700; text-transform:uppercase;">irl &gt; scrolling</p>
+                    </td>
+                  </tr>
+                </table>
+
+                <p style="font-size:24px; font-weight:800; margin:0 0 8px; text-transform:uppercase; letter-spacing:-1px;">
+                  A SPOT OPENED UP. YOU'RE IN.
                 </p>
-                <div style="border:1px solid #eee;border-radius:12px;padding:20px;margin-bottom:24px;">
-                  <p style="font-size:11px;color:#999;letter-spacing:1px;margin:0 0 12px;">EVENT</p>
-                  <p style="font-size:15px;font-weight:600;margin:0 0 8px;">${nextInLine.event.title}</p>
-                  <p style="font-size:13px;color:#666;margin:0 0 4px;">📍 ${nextInLine.event.location}</p>
-                  <p style="font-size:13px;color:#666;margin:0;">📅 ${dateStr}</p>
+                <p style="font-size:14px; color:#ffffffb3; margin:0 0 32px; line-height:1.5;">
+                  Someone cancelled and you were first on the waitlist. See you there.
+                </p>
+
+                <div style="background-color:#ffffff0a; border:1px solid #ffffff1a; border-radius:16px; padding:24px; margin-bottom:24px;">
+                  <p style="font-size:10px; color:#ffffff80; letter-spacing:2px; margin:0 0 12px; font-weight:700;">EVENT DETAILS</p>
+                  <p style="font-size:18px; font-weight:800; margin:0 0 16px; text-transform:uppercase; letter-spacing:-0.5px; color:#c6ff00;">${nextInLine.event.title}</p>
+                  
+                  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td style="padding-bottom:12px; border-bottom:1px solid #ffffff1a;">
+                        <p style="font-size:10px; color:#ffffff80; letter-spacing:2px; margin:0 0 4px; font-weight:700; text-transform:uppercase;">Location</p>
+                        <p style="font-size:14px; color:#F5F5F5; margin:0;">${nextInLine.event.location}, ${nextInLine.event.city}</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding-top:12px;">
+                        <p style="font-size:10px; color:#ffffff80; letter-spacing:2px; margin:0 0 4px; font-weight:700; text-transform:uppercase;">Date & Time</p>
+                        <p style="font-size:14px; color:#F5F5F5; margin:0;">${dateStr}</p>
+                      </td>
+                    </tr>
+                  </table>
                 </div>
-                <div style="border:1px solid #eee;border-radius:12px;padding:20px;margin-bottom:24px;text-align:center;">
-                  <p style="font-size:11px;color:#999;letter-spacing:1px;margin:0 0 16px;">YOUR CHECK-IN QR</p>
-                  <img src="${qrImageUrl}" width="160" height="160" alt="check-in qr"
-                    style="display:block;margin:0 auto;border-radius:8px;" />
-                  <p style="font-size:11px;color:#bbb;margin:12px 0 0;">screenshot this for event day</p>
+
+                <div style="background-color:#ffffff0a; border:1px solid #ffffff1a; border-radius:16px; padding:32px; margin-bottom:32px; text-align:center;">
+                  <p style="font-size:10px; color:#ffffff80; letter-spacing:2px; margin:0 0 20px; font-weight:700;">YOUR CHECK-IN QR</p>
+                  <div style="background-color:#0D0D0D; padding:16px; border-radius:16px; display:inline-block; border:1px solid #ffffff1a;">
+                    <img src="${qrImageUrl}&color=c6ff00&bgcolor=0d0d0d" width="160" height="160" alt="check-in qr code" style="display:block; margin:0 auto;" />
+                  </div>
+                  <p style="font-size:10px; color:#ffffff80; margin:20px 0 0; letter-spacing:2px; font-weight:700;">SHOW THIS AT THE DOOR</p>
                 </div>
-                <p style="font-size:12px;color:#999;">thesocialplug. · bangalore · irl > scrolling</p>
+
+                <p style="font-size:10px; color:#ffffff4d; margin:0; text-align:center; letter-spacing:1px;">
+                  THESOCIALPLUG. · BANGALORE
+                </p>
               </div>
             `,
           });

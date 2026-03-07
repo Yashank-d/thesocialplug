@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { QRCodeSVG } from "qrcode.react";
+import gsap from "gsap";
 
 export default function BookingForm({
   eventId,
@@ -23,6 +24,36 @@ export default function BookingForm({
     qr_token: string;
     waitlist_position: number | null;
   } | null>(null);
+
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (result && containerRef.current) {
+      // First, ensure container is visible but children are hidden
+      gsap.set(containerRef.current, { opacity: 1 });
+      
+      const elements = containerRef.current.children;
+      
+      gsap.fromTo(
+        elements,
+        {
+          opacity: 0,
+          y: 30,
+          scale: 0.9,
+          filter: "blur(10px)",
+        },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          filter: "blur(0px)",
+          duration: 1.2,
+          stagger: 0.15,
+          ease: "elastic.out(1, 0.6)",
+        }
+      );
+    }
+  }, [result]);
 
   function set(field: string, value: string) {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -57,7 +88,7 @@ export default function BookingForm({
 
   if (result) {
     return (
-      <div className="text-center font-inter uppercase flex flex-col items-center">
+      <div ref={containerRef} className="text-center font-inter uppercase flex flex-col items-center opacity-0 overflow-hidden py-4">
         <div className="text-3xl mb-3 font-seasons font-black text-dark tracking-tighter">
           {result.status === "waitlist" ? "WAITLISTED" : "CONFIRMED"}
         </div>
@@ -71,12 +102,12 @@ export default function BookingForm({
         {result.status === "confirmed" && (
           <div className="bg-dark/10 border border-dark/15 p-6 rounded-[2rem] flex flex-col items-center w-full max-w-[260px] relative overflow-hidden">
             <p className="text-[10px] font-bold tracking-[0.2em] mb-5 text-dark/70">YOUR CHECK-IN QR</p>
-            <div className="p-4 bg-white/90 rounded-2xl shadow-xl">
+            <div className="p-4 bg-[#0d0d0d] rounded-2xl shadow-xl border border-white/10">
               <QRCodeSVG
                 value={result.qr_token}
                 size={160}
                 bgColor="transparent"
-                fgColor="#0d0d0d"
+                fgColor="#c6ff00"
               />
             </div>
             <p className="text-[10px] tracking-[0.2em] mt-6 text-dark font-bold animate-pulse">SCREENSHOT THIS</p>
