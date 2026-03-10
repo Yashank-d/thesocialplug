@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
+import ConfirmModal from "@/components/shared/ConfirmModal";
 
 interface UnoScore {
   id: string;
@@ -32,6 +33,22 @@ export default function UnoScorerPage() {
   // Calculator state
   const [activeScoreId, setActiveScoreId] = useState<string | null>(null);
   const [roundTotal, setRoundTotal] = useState(0);
+
+  // Confirm Modal state
+  const [confirmData, setConfirmData] = useState<{
+    isOpen: boolean;
+    title: string;
+    message: string;
+    onConfirm: () => void;
+    type: "danger" | "default";
+    confirmText?: string;
+  }>({
+    isOpen: false,
+    title: "",
+    message: "",
+    onConfirm: () => {},
+    type: "default",
+  });
 
   useEffect(() => {
     fetchGame();
@@ -151,25 +168,39 @@ export default function UnoScorerPage() {
   };
 
   const handleRemovePlayer = async (scoreId: string) => {
-    if (!confirm("Remove this player?")) return;
-    try {
-      const res = await fetch(`/api/uno/scores?id=${scoreId}`, { method: "DELETE" });
-      if (res.ok) fetchGame();
-    } catch(e) { console.error(e); }
+    setConfirmData({
+      isOpen: true,
+      title: "Remove Player",
+      message: "Are you sure you want to remove this player? All their scores for this session will be lost.",
+      type: "danger",
+      confirmText: "REMOVE",
+      onConfirm: async () => {
+        try {
+          const res = await fetch(`/api/uno/scores?id=${scoreId}`, { method: "DELETE" });
+          if (res.ok) fetchGame();
+        } catch(e) { console.error(e); }
+      }
+    });
   };
 
   const handleResetGame = async () => {
-    if (!confirm("Are you sure? This will delete all scores and restart the game.")) return;
-    try {
-      const res = await fetch(`/api/uno/games?eventId=${eventId}`, { method: "DELETE" });
-      if (res.ok) {
-        setGame(null);
-        setUnoWinnerName(null);
-        // We do not auto-initialize immediately, let the user click to start a new game,
-        // or just let fetchGame handle rebuilding it.
-        fetchGame();
+    setConfirmData({
+      isOpen: true,
+      title: "Reset Session",
+      message: "This will delete all scores and restart the game. This action cannot be undone.",
+      type: "danger",
+      confirmText: "RESET",
+      onConfirm: async () => {
+        try {
+          const res = await fetch(`/api/uno/games?eventId=${eventId}`, { method: "DELETE" });
+          if (res.ok) {
+            setGame(null);
+            setUnoWinnerName(null);
+            fetchGame();
+          }
+        } catch(e) { console.error(e); }
       }
-    } catch(e) { console.error(e); }
+    });
   };
 
   const isGameOver = !!unoWinnerName;
@@ -480,6 +511,15 @@ export default function UnoScorerPage() {
           )}
         </div>
       </div>
+      <ConfirmModal 
+        isOpen={confirmData.isOpen}
+        title={confirmData.title}
+        message={confirmData.message}
+        type={confirmData.type}
+        confirmText={confirmData.confirmText}
+        onConfirm={confirmData.onConfirm}
+        onClose={() => setConfirmData(prev => ({ ...prev, isOpen: false }))}
+      />
     </div>
   );
 }
