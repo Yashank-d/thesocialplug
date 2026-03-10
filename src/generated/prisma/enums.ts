@@ -42,3 +42,20 @@ export const WaitlistMode = {
 } as const
 
 export type WaitlistMode = (typeof WaitlistMode)[keyof typeof WaitlistMode]
+
+
+export const ActivityType = {
+  uno: 'uno',
+  other: 'other'
+} as const
+
+export type ActivityType = (typeof ActivityType)[keyof typeof ActivityType]
+
+
+export const UnoVersion = {
+  classic: 'classic',
+  flip: 'flip',
+  no_mercy: 'no_mercy'
+} as const
+
+export type UnoVersion = (typeof UnoVersion)[keyof typeof UnoVersion]

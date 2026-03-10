@@ -96,32 +96,50 @@ export default async function AdminPage() {
 
       <div className="flex flex-col gap-5">
         {upcomingEvents.map((event) => (
-          <Link
+          <div
             key={event.id}
-            href={`/admin/events/${event.id}`}
-            className="glass-panel rounded-3xl p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between hover:border-white/[0.15] hover:shadow-[0_12px_40px_rgba(0,0,0,0.6)] hover:-translate-y-1 transition-all duration-300 group"
+            className="glass-panel rounded-3xl p-6 md:p-8 flex flex-col hover:border-white/[0.15] hover:shadow-[0_12px_40px_rgba(0,0,0,0.6)] hover:-translate-y-1 transition-all duration-300 group"
           >
-            <div>
-              <div className="text-2xl font-black font-seasons tracking-tighter uppercase mb-3 group-hover:text-accent transition-colors drop-shadow-sm">{event.title}</div>
-              <div className="text-[10px] uppercase font-bold tracking-[0.2em] text-light/50 flex flex-wrap gap-2 items-center">
-                <span className="text-light/70">{new Date(event.date_time).toLocaleDateString("en-IN", {
-                  month: "short",
-                  day: "2-digit",
-                  year: "2-digit",
-                })}</span>
-                <span className="w-1 h-1 rounded-full bg-white/20"></span>
-                <span className="text-light/70">{new Date(event.date_time).toLocaleTimeString("en-IN", {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}</span>
-                <span className="w-1 h-1 rounded-full bg-white/20"></span>
-                <span>{event.location}</span>
+            <div className="flex flex-col md:flex-row md:items-start justify-between">
+              <div>
+                <div className="text-2xl font-black font-seasons tracking-tighter uppercase mb-3 text-light drop-shadow-sm">{event.title}</div>
+                <div className="text-[10px] uppercase font-bold tracking-[0.2em] text-light/50 flex flex-wrap gap-2 items-center">
+                  <span className="text-light/70">{new Date(event.date_time).toLocaleDateString("en-IN", {
+                    month: "short",
+                    day: "2-digit",
+                    year: "2-digit",
+                  })}</span>
+                  <span className="w-1 h-1 rounded-full bg-white/20"></span>
+                  <span className="text-light/70">{new Date(event.date_time).toLocaleTimeString("en-IN", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}</span>
+                  <span className="w-1 h-1 rounded-full bg-white/20"></span>
+                  <span>{event.location}</span>
+                </div>
+              </div>
+              <div className="mt-5 md:mt-0 text-[10px] font-bold bg-white/5 border border-white/10 text-light px-4 py-2 rounded-full shrink-0 text-center tracking-[0.2em] backdrop-blur-sm shadow-sm">
+                <span className="text-accent">{event._count.bookings}</span> / {event.capacity} BOOKED
               </div>
             </div>
-            <div className="mt-5 md:mt-0 text-[10px] font-bold bg-white/5 border border-white/10 text-light px-4 py-2 rounded-full shrink-0 text-center tracking-[0.2em] backdrop-blur-sm shadow-sm">
-              <span className="text-accent">{event._count.bookings}</span> / {event.capacity} BOOKED
+
+            <div className="mt-6 flex flex-wrap gap-3 pt-6 border-t border-white/10">
+              <Link 
+                href={`/admin/events/${event.id}`}
+                className="text-[10px] font-bold tracking-[0.2em] bg-white/5 border border-white/10 text-light px-6 py-2 rounded-full hover:bg-white/10 transition-all text-center flex-1 md:flex-none"
+              >
+                VIEW DETAILS
+              </Link>
+              {event.activity_type === "uno" && (
+                <Link 
+                  href={`/admin/events/${event.id}/uno`}
+                  className="text-[10px] font-bold tracking-[0.2em] bg-rose-500/10 border border-rose-500/20 text-rose-400 px-6 py-2 rounded-full hover:bg-rose-500 hover:text-white transition-all text-center flex-1 md:flex-none hover:shadow-[0_0_15px_rgba(244,63,94,0.3)]"
+                >
+                  UNO SCORER
+                </Link>
+              )}
             </div>
-          </Link>
+          </div>
         ))}
       </div>
     </div>

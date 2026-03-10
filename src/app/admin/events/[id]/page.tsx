@@ -33,6 +33,9 @@ export default async function EventDetailPage({
 
   if (!event) notFound();
 
+  // Determine Uno Winner from the event table directly
+  const unoWinnerName = event.uno_winner_name;
+
   const confirmed = event.bookings.filter(
     (b) => b.status === "confirmed" || b.status === "checked_in",
   );
@@ -77,6 +80,14 @@ export default async function EventDetailPage({
               className="text-[10px] uppercase font-bold tracking-[0.2em] bg-white/5 border border-white/10 text-light px-6 py-3 rounded-full hover:bg-white/10 hover:border-white/20 transition-all shadow-sm"
             >
               EDIT
+            </Link>
+          )}
+          {role === "admin" && event.activity_type === "uno" && (
+            <Link
+              href={`/admin/events/${id}/uno`}
+              className="text-[10px] uppercase font-bold tracking-[0.2em] bg-rose-500/10 border border-rose-500/20 text-rose-400 px-6 py-3 rounded-full hover:bg-rose-500 hover:text-white hover:-translate-y-0.5 hover:shadow-[0_0_15px_rgba(244,63,94,0.3)] transition-all duration-300 backdrop-blur-sm shadow-sm"
+            >
+              UNO SCORER
             </Link>
           )}
           <Link
@@ -169,7 +180,14 @@ export default async function EventDetailPage({
             className="glass-panel rounded-3xl p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between hover:border-white/[0.15] hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.6)] transition-all duration-300"
           >
             <div>
-              <div className="text-xl md:text-2xl font-black font-seasons tracking-tighter uppercase mb-2 text-light drop-shadow-sm">{booking.attendee.name}</div>
+              <div className="flex items-center gap-3 mb-2">
+                <div className="text-xl md:text-2xl font-black font-seasons tracking-tighter uppercase text-light drop-shadow-sm">{booking.attendee.name}</div>
+                {unoWinnerName === booking.attendee.name && (
+                  <span className="text-[9px] uppercase font-bold tracking-[0.2em] px-3 py-1 rounded-full bg-accent/20 text-accent border border-accent/30 shadow-[0_0_10px_rgba(198,255,0,0.2)]">
+                    👑 UNO WINNER
+                  </span>
+                )}
+              </div>
               <div className="text-[10px] uppercase font-bold tracking-[0.2em] text-light/50 flex flex-wrap items-center gap-3">
                 <span className="text-light/70">{booking.attendee.email}</span>
                 {booking.attendee.instagram && (

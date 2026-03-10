@@ -44,9 +44,12 @@ export type EventMinAggregateOutputType = {
   capacity: number | null
   status: $Enums.EventStatus | null
   waitlist_mode: $Enums.WaitlistMode | null
+  activity_type: $Enums.ActivityType | null
+  uno_version: $Enums.UnoVersion | null
   slug: string | null
   cover_image: string | null
   created_at: Date | null
+  uno_winner_name: string | null
 }
 
 export type EventMaxAggregateOutputType = {
@@ -59,9 +62,12 @@ export type EventMaxAggregateOutputType = {
   capacity: number | null
   status: $Enums.EventStatus | null
   waitlist_mode: $Enums.WaitlistMode | null
+  activity_type: $Enums.ActivityType | null
+  uno_version: $Enums.UnoVersion | null
   slug: string | null
   cover_image: string | null
   created_at: Date | null
+  uno_winner_name: string | null
 }
 
 export type EventCountAggregateOutputType = {
@@ -74,9 +80,12 @@ export type EventCountAggregateOutputType = {
   capacity: number
   status: number
   waitlist_mode: number
+  activity_type: number
+  uno_version: number
   slug: number
   cover_image: number
   created_at: number
+  uno_winner_name: number
   _all: number
 }
 
@@ -99,9 +108,12 @@ export type EventMinAggregateInputType = {
   capacity?: true
   status?: true
   waitlist_mode?: true
+  activity_type?: true
+  uno_version?: true
   slug?: true
   cover_image?: true
   created_at?: true
+  uno_winner_name?: true
 }
 
 export type EventMaxAggregateInputType = {
@@ -114,9 +126,12 @@ export type EventMaxAggregateInputType = {
   capacity?: true
   status?: true
   waitlist_mode?: true
+  activity_type?: true
+  uno_version?: true
   slug?: true
   cover_image?: true
   created_at?: true
+  uno_winner_name?: true
 }
 
 export type EventCountAggregateInputType = {
@@ -129,9 +144,12 @@ export type EventCountAggregateInputType = {
   capacity?: true
   status?: true
   waitlist_mode?: true
+  activity_type?: true
+  uno_version?: true
   slug?: true
   cover_image?: true
   created_at?: true
+  uno_winner_name?: true
   _all?: true
 }
 
@@ -231,9 +249,12 @@ export type EventGroupByOutputType = {
   capacity: number
   status: $Enums.EventStatus
   waitlist_mode: $Enums.WaitlistMode
+  activity_type: $Enums.ActivityType
+  uno_version: $Enums.UnoVersion | null
   slug: string
   cover_image: string | null
   created_at: Date
+  uno_winner_name: string | null
   _count: EventCountAggregateOutputType | null
   _avg: EventAvgAggregateOutputType | null
   _sum: EventSumAggregateOutputType | null
@@ -269,10 +290,14 @@ export type EventWhereInput = {
   capacity?: Prisma.IntFilter<"Event"> | number
   status?: Prisma.EnumEventStatusFilter<"Event"> | $Enums.EventStatus
   waitlist_mode?: Prisma.EnumWaitlistModeFilter<"Event"> | $Enums.WaitlistMode
+  activity_type?: Prisma.EnumActivityTypeFilter<"Event"> | $Enums.ActivityType
+  uno_version?: Prisma.EnumUnoVersionNullableFilter<"Event"> | $Enums.UnoVersion | null
   slug?: Prisma.StringFilter<"Event"> | string
   cover_image?: Prisma.StringNullableFilter<"Event"> | string | null
   created_at?: Prisma.DateTimeFilter<"Event"> | Date | string
+  uno_winner_name?: Prisma.StringNullableFilter<"Event"> | string | null
   bookings?: Prisma.BookingListRelationFilter
+  unoGames?: Prisma.UnoGameListRelationFilter
 }
 
 export type EventOrderByWithRelationInput = {
@@ -285,10 +310,14 @@ export type EventOrderByWithRelationInput = {
   capacity?: Prisma.SortOrder
   status?: Prisma.SortOrder
   waitlist_mode?: Prisma.SortOrder
+  activity_type?: Prisma.SortOrder
+  uno_version?: Prisma.SortOrderInput | Prisma.SortOrder
   slug?: Prisma.SortOrder
   cover_image?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
+  uno_winner_name?: Prisma.SortOrderInput | Prisma.SortOrder
   bookings?: Prisma.BookingOrderByRelationAggregateInput
+  unoGames?: Prisma.UnoGameOrderByRelationAggregateInput
 }
 
 export type EventWhereUniqueInput = Prisma.AtLeast<{
@@ -305,9 +334,13 @@ export type EventWhereUniqueInput = Prisma.AtLeast<{
   capacity?: Prisma.IntFilter<"Event"> | number
   status?: Prisma.EnumEventStatusFilter<"Event"> | $Enums.EventStatus
   waitlist_mode?: Prisma.EnumWaitlistModeFilter<"Event"> | $Enums.WaitlistMode
+  activity_type?: Prisma.EnumActivityTypeFilter<"Event"> | $Enums.ActivityType
+  uno_version?: Prisma.EnumUnoVersionNullableFilter<"Event"> | $Enums.UnoVersion | null
   cover_image?: Prisma.StringNullableFilter<"Event"> | string | null
   created_at?: Prisma.DateTimeFilter<"Event"> | Date | string
+  uno_winner_name?: Prisma.StringNullableFilter<"Event"> | string | null
   bookings?: Prisma.BookingListRelationFilter
+  unoGames?: Prisma.UnoGameListRelationFilter
 }, "id" | "slug">
 
 export type EventOrderByWithAggregationInput = {
@@ -320,9 +353,12 @@ export type EventOrderByWithAggregationInput = {
   capacity?: Prisma.SortOrder
   status?: Prisma.SortOrder
   waitlist_mode?: Prisma.SortOrder
+  activity_type?: Prisma.SortOrder
+  uno_version?: Prisma.SortOrderInput | Prisma.SortOrder
   slug?: Prisma.SortOrder
   cover_image?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
+  uno_winner_name?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.EventCountOrderByAggregateInput
   _avg?: Prisma.EventAvgOrderByAggregateInput
   _max?: Prisma.EventMaxOrderByAggregateInput
@@ -343,9 +379,12 @@ export type EventScalarWhereWithAggregatesInput = {
   capacity?: Prisma.IntWithAggregatesFilter<"Event"> | number
   status?: Prisma.EnumEventStatusWithAggregatesFilter<"Event"> | $Enums.EventStatus
   waitlist_mode?: Prisma.EnumWaitlistModeWithAggregatesFilter<"Event"> | $Enums.WaitlistMode
+  activity_type?: Prisma.EnumActivityTypeWithAggregatesFilter<"Event"> | $Enums.ActivityType
+  uno_version?: Prisma.EnumUnoVersionNullableWithAggregatesFilter<"Event"> | $Enums.UnoVersion | null
   slug?: Prisma.StringWithAggregatesFilter<"Event"> | string
   cover_image?: Prisma.StringNullableWithAggregatesFilter<"Event"> | string | null
   created_at?: Prisma.DateTimeWithAggregatesFilter<"Event"> | Date | string
+  uno_winner_name?: Prisma.StringNullableWithAggregatesFilter<"Event"> | string | null
 }
 
 export type EventCreateInput = {
@@ -358,10 +397,14 @@ export type EventCreateInput = {
   capacity: number
   status?: $Enums.EventStatus
   waitlist_mode?: $Enums.WaitlistMode
+  activity_type?: $Enums.ActivityType
+  uno_version?: $Enums.UnoVersion | null
   slug: string
   cover_image?: string | null
   created_at?: Date | string
+  uno_winner_name?: string | null
   bookings?: Prisma.BookingCreateNestedManyWithoutEventInput
+  unoGames?: Prisma.UnoGameCreateNestedManyWithoutEventInput
 }
 
 export type EventUncheckedCreateInput = {
@@ -374,10 +417,14 @@ export type EventUncheckedCreateInput = {
   capacity: number
   status?: $Enums.EventStatus
   waitlist_mode?: $Enums.WaitlistMode
+  activity_type?: $Enums.ActivityType
+  uno_version?: $Enums.UnoVersion | null
   slug: string
   cover_image?: string | null
   created_at?: Date | string
+  uno_winner_name?: string | null
   bookings?: Prisma.BookingUncheckedCreateNestedManyWithoutEventInput
+  unoGames?: Prisma.UnoGameUncheckedCreateNestedManyWithoutEventInput
 }
 
 export type EventUpdateInput = {
@@ -390,10 +437,14 @@ export type EventUpdateInput = {
   capacity?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   waitlist_mode?: Prisma.EnumWaitlistModeFieldUpdateOperationsInput | $Enums.WaitlistMode
+  activity_type?: Prisma.EnumActivityTypeFieldUpdateOperationsInput | $Enums.ActivityType
+  uno_version?: Prisma.NullableEnumUnoVersionFieldUpdateOperationsInput | $Enums.UnoVersion | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   cover_image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  uno_winner_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookings?: Prisma.BookingUpdateManyWithoutEventNestedInput
+  unoGames?: Prisma.UnoGameUpdateManyWithoutEventNestedInput
 }
 
 export type EventUncheckedUpdateInput = {
@@ -406,10 +457,14 @@ export type EventUncheckedUpdateInput = {
   capacity?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   waitlist_mode?: Prisma.EnumWaitlistModeFieldUpdateOperationsInput | $Enums.WaitlistMode
+  activity_type?: Prisma.EnumActivityTypeFieldUpdateOperationsInput | $Enums.ActivityType
+  uno_version?: Prisma.NullableEnumUnoVersionFieldUpdateOperationsInput | $Enums.UnoVersion | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   cover_image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  uno_winner_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bookings?: Prisma.BookingUncheckedUpdateManyWithoutEventNestedInput
+  unoGames?: Prisma.UnoGameUncheckedUpdateManyWithoutEventNestedInput
 }
 
 export type EventCreateManyInput = {
@@ -422,9 +477,12 @@ export type EventCreateManyInput = {
   capacity: number
   status?: $Enums.EventStatus
   waitlist_mode?: $Enums.WaitlistMode
+  activity_type?: $Enums.ActivityType
+  uno_version?: $Enums.UnoVersion | null
   slug: string
   cover_image?: string | null
   created_at?: Date | string
+  uno_winner_name?: string | null
 }
 
 export type EventUpdateManyMutationInput = {
@@ -437,9 +495,12 @@ export type EventUpdateManyMutationInput = {
   capacity?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   waitlist_mode?: Prisma.EnumWaitlistModeFieldUpdateOperationsInput | $Enums.WaitlistMode
+  activity_type?: Prisma.EnumActivityTypeFieldUpdateOperationsInput | $Enums.ActivityType
+  uno_version?: Prisma.NullableEnumUnoVersionFieldUpdateOperationsInput | $Enums.UnoVersion | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   cover_image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  uno_winner_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type EventUncheckedUpdateManyInput = {
@@ -452,9 +513,12 @@ export type EventUncheckedUpdateManyInput = {
   capacity?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   waitlist_mode?: Prisma.EnumWaitlistModeFieldUpdateOperationsInput | $Enums.WaitlistMode
+  activity_type?: Prisma.EnumActivityTypeFieldUpdateOperationsInput | $Enums.ActivityType
+  uno_version?: Prisma.NullableEnumUnoVersionFieldUpdateOperationsInput | $Enums.UnoVersion | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   cover_image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  uno_winner_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type EventCountOrderByAggregateInput = {
@@ -467,9 +531,12 @@ export type EventCountOrderByAggregateInput = {
   capacity?: Prisma.SortOrder
   status?: Prisma.SortOrder
   waitlist_mode?: Prisma.SortOrder
+  activity_type?: Prisma.SortOrder
+  uno_version?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   cover_image?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
+  uno_winner_name?: Prisma.SortOrder
 }
 
 export type EventAvgOrderByAggregateInput = {
@@ -486,9 +553,12 @@ export type EventMaxOrderByAggregateInput = {
   capacity?: Prisma.SortOrder
   status?: Prisma.SortOrder
   waitlist_mode?: Prisma.SortOrder
+  activity_type?: Prisma.SortOrder
+  uno_version?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   cover_image?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
+  uno_winner_name?: Prisma.SortOrder
 }
 
 export type EventMinOrderByAggregateInput = {
@@ -501,9 +571,12 @@ export type EventMinOrderByAggregateInput = {
   capacity?: Prisma.SortOrder
   status?: Prisma.SortOrder
   waitlist_mode?: Prisma.SortOrder
+  activity_type?: Prisma.SortOrder
+  uno_version?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   cover_image?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
+  uno_winner_name?: Prisma.SortOrder
 }
 
 export type EventSumOrderByAggregateInput = {
@@ -543,6 +616,14 @@ export type EnumWaitlistModeFieldUpdateOperationsInput = {
   set?: $Enums.WaitlistMode
 }
 
+export type EnumActivityTypeFieldUpdateOperationsInput = {
+  set?: $Enums.ActivityType
+}
+
+export type NullableEnumUnoVersionFieldUpdateOperationsInput = {
+  set?: $Enums.UnoVersion | null
+}
+
 export type EventCreateNestedOneWithoutBookingsInput = {
   create?: Prisma.XOR<Prisma.EventCreateWithoutBookingsInput, Prisma.EventUncheckedCreateWithoutBookingsInput>
   connectOrCreate?: Prisma.EventCreateOrConnectWithoutBookingsInput
@@ -557,6 +638,20 @@ export type EventUpdateOneRequiredWithoutBookingsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.EventUpdateToOneWithWhereWithoutBookingsInput, Prisma.EventUpdateWithoutBookingsInput>, Prisma.EventUncheckedUpdateWithoutBookingsInput>
 }
 
+export type EventCreateNestedOneWithoutUnoGamesInput = {
+  create?: Prisma.XOR<Prisma.EventCreateWithoutUnoGamesInput, Prisma.EventUncheckedCreateWithoutUnoGamesInput>
+  connectOrCreate?: Prisma.EventCreateOrConnectWithoutUnoGamesInput
+  connect?: Prisma.EventWhereUniqueInput
+}
+
+export type EventUpdateOneRequiredWithoutUnoGamesNestedInput = {
+  create?: Prisma.XOR<Prisma.EventCreateWithoutUnoGamesInput, Prisma.EventUncheckedCreateWithoutUnoGamesInput>
+  connectOrCreate?: Prisma.EventCreateOrConnectWithoutUnoGamesInput
+  upsert?: Prisma.EventUpsertWithoutUnoGamesInput
+  connect?: Prisma.EventWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.EventUpdateToOneWithWhereWithoutUnoGamesInput, Prisma.EventUpdateWithoutUnoGamesInput>, Prisma.EventUncheckedUpdateWithoutUnoGamesInput>
+}
+
 export type EventCreateWithoutBookingsInput = {
   id?: string
   title: string
@@ -567,9 +662,13 @@ export type EventCreateWithoutBookingsInput = {
   capacity: number
   status?: $Enums.EventStatus
   waitlist_mode?: $Enums.WaitlistMode
+  activity_type?: $Enums.ActivityType
+  uno_version?: $Enums.UnoVersion | null
   slug: string
   cover_image?: string | null
   created_at?: Date | string
+  uno_winner_name?: string | null
+  unoGames?: Prisma.UnoGameCreateNestedManyWithoutEventInput
 }
 
 export type EventUncheckedCreateWithoutBookingsInput = {
@@ -582,9 +681,13 @@ export type EventUncheckedCreateWithoutBookingsInput = {
   capacity: number
   status?: $Enums.EventStatus
   waitlist_mode?: $Enums.WaitlistMode
+  activity_type?: $Enums.ActivityType
+  uno_version?: $Enums.UnoVersion | null
   slug: string
   cover_image?: string | null
   created_at?: Date | string
+  uno_winner_name?: string | null
+  unoGames?: Prisma.UnoGameUncheckedCreateNestedManyWithoutEventInput
 }
 
 export type EventCreateOrConnectWithoutBookingsInput = {
@@ -613,9 +716,13 @@ export type EventUpdateWithoutBookingsInput = {
   capacity?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   waitlist_mode?: Prisma.EnumWaitlistModeFieldUpdateOperationsInput | $Enums.WaitlistMode
+  activity_type?: Prisma.EnumActivityTypeFieldUpdateOperationsInput | $Enums.ActivityType
+  uno_version?: Prisma.NullableEnumUnoVersionFieldUpdateOperationsInput | $Enums.UnoVersion | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   cover_image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  uno_winner_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unoGames?: Prisma.UnoGameUpdateManyWithoutEventNestedInput
 }
 
 export type EventUncheckedUpdateWithoutBookingsInput = {
@@ -628,9 +735,105 @@ export type EventUncheckedUpdateWithoutBookingsInput = {
   capacity?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   waitlist_mode?: Prisma.EnumWaitlistModeFieldUpdateOperationsInput | $Enums.WaitlistMode
+  activity_type?: Prisma.EnumActivityTypeFieldUpdateOperationsInput | $Enums.ActivityType
+  uno_version?: Prisma.NullableEnumUnoVersionFieldUpdateOperationsInput | $Enums.UnoVersion | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   cover_image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  uno_winner_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unoGames?: Prisma.UnoGameUncheckedUpdateManyWithoutEventNestedInput
+}
+
+export type EventCreateWithoutUnoGamesInput = {
+  id?: string
+  title: string
+  description?: string | null
+  location: string
+  city?: string
+  date_time: Date | string
+  capacity: number
+  status?: $Enums.EventStatus
+  waitlist_mode?: $Enums.WaitlistMode
+  activity_type?: $Enums.ActivityType
+  uno_version?: $Enums.UnoVersion | null
+  slug: string
+  cover_image?: string | null
+  created_at?: Date | string
+  uno_winner_name?: string | null
+  bookings?: Prisma.BookingCreateNestedManyWithoutEventInput
+}
+
+export type EventUncheckedCreateWithoutUnoGamesInput = {
+  id?: string
+  title: string
+  description?: string | null
+  location: string
+  city?: string
+  date_time: Date | string
+  capacity: number
+  status?: $Enums.EventStatus
+  waitlist_mode?: $Enums.WaitlistMode
+  activity_type?: $Enums.ActivityType
+  uno_version?: $Enums.UnoVersion | null
+  slug: string
+  cover_image?: string | null
+  created_at?: Date | string
+  uno_winner_name?: string | null
+  bookings?: Prisma.BookingUncheckedCreateNestedManyWithoutEventInput
+}
+
+export type EventCreateOrConnectWithoutUnoGamesInput = {
+  where: Prisma.EventWhereUniqueInput
+  create: Prisma.XOR<Prisma.EventCreateWithoutUnoGamesInput, Prisma.EventUncheckedCreateWithoutUnoGamesInput>
+}
+
+export type EventUpsertWithoutUnoGamesInput = {
+  update: Prisma.XOR<Prisma.EventUpdateWithoutUnoGamesInput, Prisma.EventUncheckedUpdateWithoutUnoGamesInput>
+  create: Prisma.XOR<Prisma.EventCreateWithoutUnoGamesInput, Prisma.EventUncheckedCreateWithoutUnoGamesInput>
+  where?: Prisma.EventWhereInput
+}
+
+export type EventUpdateToOneWithWhereWithoutUnoGamesInput = {
+  where?: Prisma.EventWhereInput
+  data: Prisma.XOR<Prisma.EventUpdateWithoutUnoGamesInput, Prisma.EventUncheckedUpdateWithoutUnoGamesInput>
+}
+
+export type EventUpdateWithoutUnoGamesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  date_time?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+  waitlist_mode?: Prisma.EnumWaitlistModeFieldUpdateOperationsInput | $Enums.WaitlistMode
+  activity_type?: Prisma.EnumActivityTypeFieldUpdateOperationsInput | $Enums.ActivityType
+  uno_version?: Prisma.NullableEnumUnoVersionFieldUpdateOperationsInput | $Enums.UnoVersion | null
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  cover_image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  uno_winner_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bookings?: Prisma.BookingUpdateManyWithoutEventNestedInput
+}
+
+export type EventUncheckedUpdateWithoutUnoGamesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  date_time?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+  waitlist_mode?: Prisma.EnumWaitlistModeFieldUpdateOperationsInput | $Enums.WaitlistMode
+  activity_type?: Prisma.EnumActivityTypeFieldUpdateOperationsInput | $Enums.ActivityType
+  uno_version?: Prisma.NullableEnumUnoVersionFieldUpdateOperationsInput | $Enums.UnoVersion | null
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  cover_image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  uno_winner_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bookings?: Prisma.BookingUncheckedUpdateManyWithoutEventNestedInput
 }
 
 
@@ -640,10 +843,12 @@ export type EventUncheckedUpdateWithoutBookingsInput = {
 
 export type EventCountOutputType = {
   bookings: number
+  unoGames: number
 }
 
 export type EventCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   bookings?: boolean | EventCountOutputTypeCountBookingsArgs
+  unoGames?: boolean | EventCountOutputTypeCountUnoGamesArgs
 }
 
 /**
@@ -663,6 +868,13 @@ export type EventCountOutputTypeCountBookingsArgs<ExtArgs extends runtime.Types.
   where?: Prisma.BookingWhereInput
 }
 
+/**
+ * EventCountOutputType without action
+ */
+export type EventCountOutputTypeCountUnoGamesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UnoGameWhereInput
+}
+
 
 export type EventSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -674,10 +886,14 @@ export type EventSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   capacity?: boolean
   status?: boolean
   waitlist_mode?: boolean
+  activity_type?: boolean
+  uno_version?: boolean
   slug?: boolean
   cover_image?: boolean
   created_at?: boolean
+  uno_winner_name?: boolean
   bookings?: boolean | Prisma.Event$bookingsArgs<ExtArgs>
+  unoGames?: boolean | Prisma.Event$unoGamesArgs<ExtArgs>
   _count?: boolean | Prisma.EventCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["event"]>
 
@@ -691,9 +907,12 @@ export type EventSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   capacity?: boolean
   status?: boolean
   waitlist_mode?: boolean
+  activity_type?: boolean
+  uno_version?: boolean
   slug?: boolean
   cover_image?: boolean
   created_at?: boolean
+  uno_winner_name?: boolean
 }, ExtArgs["result"]["event"]>
 
 export type EventSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -706,9 +925,12 @@ export type EventSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   capacity?: boolean
   status?: boolean
   waitlist_mode?: boolean
+  activity_type?: boolean
+  uno_version?: boolean
   slug?: boolean
   cover_image?: boolean
   created_at?: boolean
+  uno_winner_name?: boolean
 }, ExtArgs["result"]["event"]>
 
 export type EventSelectScalar = {
@@ -721,14 +943,18 @@ export type EventSelectScalar = {
   capacity?: boolean
   status?: boolean
   waitlist_mode?: boolean
+  activity_type?: boolean
+  uno_version?: boolean
   slug?: boolean
   cover_image?: boolean
   created_at?: boolean
+  uno_winner_name?: boolean
 }
 
-export type EventOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "location" | "city" | "date_time" | "capacity" | "status" | "waitlist_mode" | "slug" | "cover_image" | "created_at", ExtArgs["result"]["event"]>
+export type EventOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "location" | "city" | "date_time" | "capacity" | "status" | "waitlist_mode" | "activity_type" | "uno_version" | "slug" | "cover_image" | "created_at" | "uno_winner_name", ExtArgs["result"]["event"]>
 export type EventInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   bookings?: boolean | Prisma.Event$bookingsArgs<ExtArgs>
+  unoGames?: boolean | Prisma.Event$unoGamesArgs<ExtArgs>
   _count?: boolean | Prisma.EventCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type EventIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -738,6 +964,7 @@ export type $EventPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   name: "Event"
   objects: {
     bookings: Prisma.$BookingPayload<ExtArgs>[]
+    unoGames: Prisma.$UnoGamePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -749,9 +976,12 @@ export type $EventPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     capacity: number
     status: $Enums.EventStatus
     waitlist_mode: $Enums.WaitlistMode
+    activity_type: $Enums.ActivityType
+    uno_version: $Enums.UnoVersion | null
     slug: string
     cover_image: string | null
     created_at: Date
+    uno_winner_name: string | null
   }, ExtArgs["result"]["event"]>
   composites: {}
 }
@@ -1147,6 +1377,7 @@ readonly fields: EventFieldRefs;
 export interface Prisma__EventClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   bookings<T extends Prisma.Event$bookingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Event$bookingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BookingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  unoGames<T extends Prisma.Event$unoGamesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Event$unoGamesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UnoGamePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1185,9 +1416,12 @@ export interface EventFieldRefs {
   readonly capacity: Prisma.FieldRef<"Event", 'Int'>
   readonly status: Prisma.FieldRef<"Event", 'EventStatus'>
   readonly waitlist_mode: Prisma.FieldRef<"Event", 'WaitlistMode'>
+  readonly activity_type: Prisma.FieldRef<"Event", 'ActivityType'>
+  readonly uno_version: Prisma.FieldRef<"Event", 'UnoVersion'>
   readonly slug: Prisma.FieldRef<"Event", 'String'>
   readonly cover_image: Prisma.FieldRef<"Event", 'String'>
   readonly created_at: Prisma.FieldRef<"Event", 'DateTime'>
+  readonly uno_winner_name: Prisma.FieldRef<"Event", 'String'>
 }
     
 
@@ -1597,6 +1831,30 @@ export type Event$bookingsArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.BookingScalarFieldEnum | Prisma.BookingScalarFieldEnum[]
+}
+
+/**
+ * Event.unoGames
+ */
+export type Event$unoGamesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UnoGame
+   */
+  select?: Prisma.UnoGameSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UnoGame
+   */
+  omit?: Prisma.UnoGameOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UnoGameInclude<ExtArgs> | null
+  where?: Prisma.UnoGameWhereInput
+  orderBy?: Prisma.UnoGameOrderByWithRelationInput | Prisma.UnoGameOrderByWithRelationInput[]
+  cursor?: Prisma.UnoGameWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UnoGameScalarFieldEnum | Prisma.UnoGameScalarFieldEnum[]
 }
 
 /**

@@ -26,6 +26,8 @@ export async function POST(req: Request) {
       capacity,
       slug,
       waitlist_mode,
+      activity_type,
+      uno_version,
     } = body;
 
     if (!title || !location || !date_time || !capacity || !slug) {
@@ -45,6 +47,8 @@ export async function POST(req: Request) {
         capacity: parseInt(capacity),
         slug,
         waitlist_mode: waitlist_mode || "auto",
+        activity_type: activity_type || "other",
+        uno_version: activity_type === "uno" ? (uno_version || "classic") : null,
       },
     });
     return NextResponse.json(event);

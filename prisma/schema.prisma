@@ -30,6 +30,17 @@ enum WaitlistMode {
   closed
 }
 
+enum ActivityType {
+  uno
+  other
+}
+
+enum UnoVersion {
+  classic
+  flip
+  no_mercy
+}
+
 model Event {
   id               String       @id @default(uuid())
   title            String
@@ -40,10 +51,14 @@ model Event {
   capacity         Int
   status           EventStatus  @default(draft)
   waitlist_mode    WaitlistMode @default(auto)
+  activity_type    ActivityType @default(other)
+  uno_version      UnoVersion?
   slug             String       @unique
   cover_image      String?
   created_at       DateTime     @default(now())
   bookings         Booking[]
+  unoGames         UnoGame[]
+  uno_winner_name  String?
 }
 
 model Attendee {
@@ -76,4 +91,23 @@ model TeamMember {
   name       String
   role       TeamRole @default(team)
   created_at DateTime @default(now())
+}
+
+model UnoGame {
+  id          String     @id @default(uuid())
+  event_id    String
+  event       Event      @relation(fields: [event_id], references: [id], onDelete: Cascade)
+  status      String     @default("in_progress")
+  created_at  DateTime   @default(now())
+  scores      UnoScore[]
+}
+
+model UnoScore {
+  id          String   @id @default(uuid())
+  game_id     String
+  game        UnoGame  @relation(fields: [game_id], references: [id], onDelete: Cascade)
+  player_name String
+  score       Int      @default(0)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
 }

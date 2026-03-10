@@ -54,7 +54,9 @@ export const ModelName = {
   Event: 'Event',
   Attendee: 'Attendee',
   Booking: 'Booking',
-  TeamMember: 'TeamMember'
+  TeamMember: 'TeamMember',
+  UnoGame: 'UnoGame',
+  UnoScore: 'UnoScore'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -83,9 +85,12 @@ export const EventScalarFieldEnum = {
   capacity: 'capacity',
   status: 'status',
   waitlist_mode: 'waitlist_mode',
+  activity_type: 'activity_type',
+  uno_version: 'uno_version',
   slug: 'slug',
   cover_image: 'cover_image',
-  created_at: 'created_at'
+  created_at: 'created_at',
+  uno_winner_name: 'uno_winner_name'
 } as const
 
 export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof EventScalarFieldEnum]
@@ -127,6 +132,28 @@ export const TeamMemberScalarFieldEnum = {
 } as const
 
 export type TeamMemberScalarFieldEnum = (typeof TeamMemberScalarFieldEnum)[keyof typeof TeamMemberScalarFieldEnum]
+
+
+export const UnoGameScalarFieldEnum = {
+  id: 'id',
+  event_id: 'event_id',
+  status: 'status',
+  created_at: 'created_at'
+} as const
+
+export type UnoGameScalarFieldEnum = (typeof UnoGameScalarFieldEnum)[keyof typeof UnoGameScalarFieldEnum]
+
+
+export const UnoScoreScalarFieldEnum = {
+  id: 'id',
+  game_id: 'game_id',
+  player_name: 'player_name',
+  score: 'score',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type UnoScoreScalarFieldEnum = (typeof UnoScoreScalarFieldEnum)[keyof typeof UnoScoreScalarFieldEnum]
 
 
 export const SortOrder = {

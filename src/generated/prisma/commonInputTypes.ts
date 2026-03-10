@@ -80,6 +80,20 @@ export type EnumWaitlistModeFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumWaitlistModeFilter<$PrismaModel> | $Enums.WaitlistMode
 }
 
+export type EnumActivityTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.ActivityType | Prisma.EnumActivityTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.ActivityType[] | Prisma.ListEnumActivityTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ActivityType[] | Prisma.ListEnumActivityTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumActivityTypeFilter<$PrismaModel> | $Enums.ActivityType
+}
+
+export type EnumUnoVersionNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.UnoVersion | Prisma.EnumUnoVersionFieldRefInput<$PrismaModel> | null
+  in?: $Enums.UnoVersion[] | Prisma.ListEnumUnoVersionFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.UnoVersion[] | Prisma.ListEnumUnoVersionFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumUnoVersionNullableFilter<$PrismaModel> | $Enums.UnoVersion | null
+}
+
 export type SortOrderInput = {
   sort: Prisma.SortOrder
   nulls?: Prisma.NullsOrder
@@ -169,6 +183,26 @@ export type EnumWaitlistModeWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumWaitlistModeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumWaitlistModeFilter<$PrismaModel>
+}
+
+export type EnumActivityTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ActivityType | Prisma.EnumActivityTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.ActivityType[] | Prisma.ListEnumActivityTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ActivityType[] | Prisma.ListEnumActivityTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumActivityTypeWithAggregatesFilter<$PrismaModel> | $Enums.ActivityType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumActivityTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumActivityTypeFilter<$PrismaModel>
+}
+
+export type EnumUnoVersionNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.UnoVersion | Prisma.EnumUnoVersionFieldRefInput<$PrismaModel> | null
+  in?: $Enums.UnoVersion[] | Prisma.ListEnumUnoVersionFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.UnoVersion[] | Prisma.ListEnumUnoVersionFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumUnoVersionNullableWithAggregatesFilter<$PrismaModel> | $Enums.UnoVersion | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumUnoVersionNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumUnoVersionNullableFilter<$PrismaModel>
 }
 
 export type EnumBookingStatusFilter<$PrismaModel = never> = {
@@ -321,6 +355,20 @@ export type NestedEnumWaitlistModeFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumWaitlistModeFilter<$PrismaModel> | $Enums.WaitlistMode
 }
 
+export type NestedEnumActivityTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.ActivityType | Prisma.EnumActivityTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.ActivityType[] | Prisma.ListEnumActivityTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ActivityType[] | Prisma.ListEnumActivityTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumActivityTypeFilter<$PrismaModel> | $Enums.ActivityType
+}
+
+export type NestedEnumUnoVersionNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.UnoVersion | Prisma.EnumUnoVersionFieldRefInput<$PrismaModel> | null
+  in?: $Enums.UnoVersion[] | Prisma.ListEnumUnoVersionFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.UnoVersion[] | Prisma.ListEnumUnoVersionFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumUnoVersionNullableFilter<$PrismaModel> | $Enums.UnoVersion | null
+}
+
 export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -425,6 +473,26 @@ export type NestedEnumWaitlistModeWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumWaitlistModeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumWaitlistModeFilter<$PrismaModel>
+}
+
+export type NestedEnumActivityTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ActivityType | Prisma.EnumActivityTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.ActivityType[] | Prisma.ListEnumActivityTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ActivityType[] | Prisma.ListEnumActivityTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumActivityTypeWithAggregatesFilter<$PrismaModel> | $Enums.ActivityType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumActivityTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumActivityTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumUnoVersionNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.UnoVersion | Prisma.EnumUnoVersionFieldRefInput<$PrismaModel> | null
+  in?: $Enums.UnoVersion[] | Prisma.ListEnumUnoVersionFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.UnoVersion[] | Prisma.ListEnumUnoVersionFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumUnoVersionNullableWithAggregatesFilter<$PrismaModel> | $Enums.UnoVersion | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumUnoVersionNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumUnoVersionNullableFilter<$PrismaModel>
 }
 
 export type NestedEnumBookingStatusFilter<$PrismaModel = never> = {

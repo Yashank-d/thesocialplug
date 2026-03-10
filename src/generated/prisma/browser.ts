@@ -37,3 +37,13 @@ export type Booking = Prisma.BookingModel
  * 
  */
 export type TeamMember = Prisma.TeamMemberModel
+/**
+ * Model UnoGame
+ * 
+ */
+export type UnoGame = Prisma.UnoGameModel
+/**
+ * Model UnoScore
+ * 
+ */
+export type UnoScore = Prisma.UnoScoreModel

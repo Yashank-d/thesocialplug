@@ -63,6 +63,9 @@ export async function PUT(
         ...body,
         ...(body.date_time && { date_time: new Date(body.date_time) }),
         ...(body.capacity && { capacity: parseInt(body.capacity) }),
+        ...(body.activity_type && {
+          uno_version: body.activity_type === "uno" ? (body.uno_version || "classic") : null,
+        }),
       },
     });
 

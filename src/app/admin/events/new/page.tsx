@@ -16,6 +16,8 @@ export default function NewEventPage() {
     capacity: "",
     slug: "",
     waitlist_mode: "auto",
+    activity_type: "other",
+    uno_version: "classic",
   });
 
   function set(field: string, value: string) {
@@ -97,11 +99,52 @@ export default function NewEventPage() {
                 <option value="auto" className="bg-[#1a1a1a] text-light">AUTO WAITLIST</option>
                 <option value="closed" className="bg-[#1a1a1a] text-light">CLOSE BOOKINGS</option>
               </select>
-              <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-light/50 text-[10px] tracking-widest font-seasons rotate-90 w-4 h-4 text-center">
-                &gt;
+              <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-light/50 text-[10px] tracking-widest font-seasons w-4 h-4 text-center">
+                ▼
               </div>
             </div>
           </div>
+
+          <div className="group mt-2 border-t border-white/10 pt-6">
+            <label className="text-[10px] uppercase font-bold tracking-[0.2em] text-light/50 block mb-2 pl-2 group-focus-within:text-accent transition-colors">
+              ACTIVITY TYPE
+            </label>
+            <div className="relative">
+              <select
+                value={form.activity_type}
+                onChange={(e) => set("activity_type", e.target.value)}
+                className="glass-input rounded-2xl text-sm appearance-none cursor-pointer pr-10"
+              >
+                <option value="other" className="bg-[#1a1a1a] text-light">STANDARD EVENT</option>
+                <option value="uno" className="bg-[#1a1a1a] text-light">UNO GAME SHOWDOWN</option>
+              </select>
+              <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-light/50 text-[10px] tracking-widest font-seasons w-4 h-4 text-center">
+                ▼
+              </div>
+            </div>
+          </div>
+
+          {form.activity_type === "uno" && (
+            <div className="group mt-2">
+              <label className="text-[10px] uppercase font-bold tracking-[0.2em] text-light/50 block mb-2 pl-2 group-focus-within:text-accent transition-colors">
+                UNO RULES VERSION
+              </label>
+              <div className="relative">
+                <select
+                  value={form.uno_version}
+                  onChange={(e) => set("uno_version", e.target.value)}
+                  className="glass-input rounded-2xl text-sm appearance-none cursor-pointer pr-10 border-accent/30 bg-accent/5 ring-1 ring-accent/20"
+                >
+                  <option value="classic" className="bg-[#1a1a1a] text-light">CLASSIC (500 pts)</option>
+                  <option value="flip" className="bg-[#1a1a1a] text-light">UNO FLIP! (Light & Dark Sides)</option>
+                  <option value="no_mercy" className="bg-[#1a1a1a] text-light">SHOW 'EM NO MERCY (Brutal & Knockouts)</option>
+                </select>
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-accent text-[10px] tracking-widest font-seasons w-4 h-4 text-center">
+                  ▼
+                </div>
+              </div>
+            </div>
+          )}
 
           {error && <p className="text-red-400 text-sm font-bold tracking-widest mt-2 pl-2 bg-red-500/10 p-4 rounded-xl border border-red-500/20">{error}</p>}
 
