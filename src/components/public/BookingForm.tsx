@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import gsap from "gsap";
+import TermsModal from "./TermsModal";
 
 export default function BookingForm({
   eventId,
@@ -24,6 +25,9 @@ export default function BookingForm({
     qr_token: string;
     waitlist_position: number | null;
   } | null>(null);
+
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [showTermsModal, setShowTermsModal] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -62,6 +66,10 @@ export default function BookingForm({
   async function handleSubmit() {
     if (!form.name.trim() || !form.email.trim()) {
       setError("name and email are required");
+      return;
+    }
+    if (!termsAccepted) {
+      setError("Please accept the Terms & Conditions");
       return;
     }
     setLoading(true);
@@ -147,6 +155,43 @@ export default function BookingForm({
           </div>
         ))}
 
+        {/* T&C Checkbox */}
+        <div className="flex items-start gap-3 mt-2 px-2">
+          <button
+            type="button"
+            onClick={() => {
+              if (!termsAccepted) {
+                setShowTermsModal(true);
+              } else {
+                setTermsAccepted(false);
+              }
+            }}
+            className={`mt-0.5 shrink-0 w-5 h-5 rounded border flex items-center justify-center transition-colors ${
+              termsAccepted 
+                ? "bg-dark border-dark text-accent" 
+                : "bg-transparent border-dark/30 text-transparent hover:border-dark/60"
+            }`}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <p className="text-xs text-dark/70 font-medium leading-tight text-left">
+            I have read and agree to the{" "}
+            <button
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                setShowTermsModal(true);
+              }}
+              className="text-dark font-bold underline decoration-dark/30 hover:decoration-dark underline-offset-2 transition-colors"
+            >
+              Terms & Conditions
+            </button>
+            .
+          </p>
+        </div>
+
         {/* Error State */}
         {error && (
           <p className="text-red-700 font-bold font-inter mt-3 px-2 text-[11px] uppercase tracking-widest text-center animate-pulse">
@@ -157,12 +202,18 @@ export default function BookingForm({
         {/* Action Button */}
         <button
           onClick={handleSubmit}
-          disabled={loading}
-          className="w-full py-4 mt-6 rounded-2xl bg-dark text-accent font-seasons text-base font-bold shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.4)] hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:cursor-not-allowed uppercase tracking-widest"
+          disabled={loading || !termsAccepted}
+          className="w-full py-4 mt-6 rounded-2xl bg-dark text-accent font-seasons text-base font-bold shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.4)] hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-[0_4px_20px_rgba(0,0,0,0.3)] uppercase tracking-widest"
         >
           {loading ? "PROCESSING..." : isFull ? "JOIN WAITLIST →" : "RESERVE SPOT →"}
         </button>
       </div>
+
+      <TermsModal 
+        isOpen={showTermsModal} 
+        onClose={() => setShowTermsModal(false)}
+        onAccept={() => setTermsAccepted(true)}
+      />
     </div>
   );
 }

@@ -188,7 +188,7 @@ export default function UnoScorerPage() {
         ← BACK TO DASHBOARD
       </Link>
       
-      <div className="mb-12 border-b border-light/10 pb-6 flex items-start justify-between">
+      <div className="mb-12 border-b border-light/10 pb-6 flex flex-col md:flex-row md:items-start justify-between gap-6">
         <div>
           <h1 className="text-4xl font-black font-seasons tracking-tighter text-light drop-shadow-md">UNO SCORER</h1>
           <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-accent leading-none mt-3 mb-1">
@@ -197,9 +197,9 @@ export default function UnoScorerPage() {
         </div>
         <button
           onClick={handleResetGame}
-          className="text-[10px] font-bold tracking-[0.2em] bg-red-500/10 border border-red-500/20 text-red-400 px-6 py-3 rounded-full hover:bg-red-500 hover:text-white transition-all shadow-sm flex items-center gap-2 mt-1"
+          className="text-[10px] font-bold tracking-[0.2em] bg-red-500/10 border border-red-500/20 text-red-400 px-6 py-3 rounded-full hover:bg-red-500 hover:text-white transition-all shadow-sm flex items-center justify-center gap-2 mt-1 w-full md:w-auto whitespace-nowrap"
         >
-          <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+          <svg className="w-3 h-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
           RESET GAME
         </button>
       </div>
@@ -229,24 +229,24 @@ export default function UnoScorerPage() {
             {game?.scores.map((score) => (
               <div 
                 key={score.id}
-                className={`glass-panel rounded-3xl p-6 flex items-center justify-between border transition-all duration-300 relative group ${activeScoreId === score.id ? 'border-accent shadow-[0_0_30px_rgba(198,255,0,0.15)] bg-white/5' : 'border-white/5 hover:border-white/15'}`}
+                className={`glass-panel rounded-3xl p-6 flex flex-col md:flex-row md:items-center justify-between border transition-all duration-300 relative group gap-4 ${activeScoreId === score.id ? 'border-accent shadow-[0_0_30px_rgba(198,255,0,0.15)] bg-white/5' : 'border-white/5 hover:border-white/15'}`}
               >
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 flex-1">
                   <button
                     onClick={() => handleRemovePlayer(score.id)}
-                    className="w-6 h-6 rounded-full bg-red-500/20 text-red-500 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-500 hover:text-white"
+                    className="w-6 h-6 shrink-0 rounded-full bg-red-500/20 text-red-500 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-500 hover:text-white"
                     title="Remove Player"
                   >
                     ×
                   </button>
-                  <div>
-                    <div className="text-xl font-black tracking-tight text-light">{score.player_name}</div>
+                  <div className="min-w-0 pr-4">
+                    <div className="text-xl font-black tracking-tight text-light truncate">{score.player_name}</div>
                     <div className="text-[10px] uppercase font-bold tracking-[0.2em] text-light/50 mt-1">TOTAL SCORE</div>
                   </div>
                 </div>
                 
-                <div className="flex items-center gap-6">
-                  <div className="text-3xl font-seasons font-black text-accent w-20 text-right">{score.score}</div>
+                <div className="flex items-center justify-between md:justify-end gap-6 w-full md:w-auto shrink-0 pl-10 md:pl-0">
+                  <div className="text-3xl font-seasons font-black text-accent w-20 text-left md:text-right">{score.score}</div>
                   
                   {!isGameOver && activeScoreId !== score.id && (
                     <button
@@ -254,10 +254,13 @@ export default function UnoScorerPage() {
                         setActiveScoreId(score.id);
                         setRoundTotal(0);
                       }}
-                      className="text-[10px] font-bold tracking-[0.2em] bg-white/10 border border-white/20 text-light px-4 py-2 rounded-full hover:bg-white/20 transition-all font-inter"
+                      className="text-[10px] font-bold tracking-[0.2em] bg-white/10 border border-white/20 text-light px-4 py-2 rounded-full hover:bg-white/20 transition-all font-inter w-28 shrink-0 flex items-center justify-center"
                     >
                       + SCORE
                     </button>
+                  )}
+                  {(!isGameOver && activeScoreId === score.id) && (
+                    <div className="w-28 shrink-0"></div> // Spacer to keep layout shift to a minimum when calculator opens
                   )}
                 </div>
               </div>

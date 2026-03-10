@@ -73,11 +73,11 @@ export default async function EventDetailPage({
             <span>{event.location}</span>
           </p>
         </div>
-        <div className="flex items-center gap-4 shrink-0 mt-2 md:mt-10">
+        <div className="flex flex-wrap items-center gap-3 shrink-0 mt-4 md:mt-10 w-full md:w-auto">
           {role === "admin" && (
             <Link
               href={`/admin/events/${id}/edit`}
-              className="text-[10px] uppercase font-bold tracking-[0.2em] bg-white/5 border border-white/10 text-light px-6 py-3 rounded-full hover:bg-white/10 hover:border-white/20 transition-all shadow-sm"
+              className="text-[10px] uppercase font-bold tracking-[0.2em] bg-white/5 border border-white/10 text-light px-6 py-3 rounded-full hover:bg-white/10 hover:border-white/20 transition-all shadow-sm text-center whitespace-nowrap flex-grow md:flex-grow-0"
             >
               EDIT
             </Link>
@@ -85,14 +85,14 @@ export default async function EventDetailPage({
           {role === "admin" && event.activity_type === "uno" && (
             <Link
               href={`/admin/events/${id}/uno`}
-              className="text-[10px] uppercase font-bold tracking-[0.2em] bg-rose-500/10 border border-rose-500/20 text-rose-400 px-6 py-3 rounded-full hover:bg-rose-500 hover:text-white hover:-translate-y-0.5 hover:shadow-[0_0_15px_rgba(244,63,94,0.3)] transition-all duration-300 backdrop-blur-sm shadow-sm"
+              className="text-[10px] uppercase font-bold tracking-[0.2em] bg-rose-500/10 border border-rose-500/20 text-rose-400 px-6 py-3 rounded-full hover:bg-rose-500 hover:text-white hover:-translate-y-0.5 hover:shadow-[0_0_15px_rgba(244,63,94,0.3)] transition-all duration-300 backdrop-blur-sm shadow-sm text-center whitespace-nowrap flex-grow md:flex-grow-0"
             >
               UNO SCORER
             </Link>
           )}
           <Link
             href={`/admin/events/${id}/checkin`}
-            className="text-[10px] uppercase font-bold tracking-[0.2em] bg-accent/10 border border-accent/20 text-accent px-6 py-3 rounded-full hover:bg-accent hover:text-dark hover:-translate-y-0.5 hover:shadow-[0_0_15px_rgba(198,255,0,0.3)] transition-all duration-300 backdrop-blur-sm"
+            className="text-[10px] uppercase font-bold tracking-[0.2em] bg-accent/10 border border-accent/20 text-accent px-6 py-3 rounded-full hover:bg-accent hover:text-dark hover:-translate-y-0.5 hover:shadow-[0_0_15px_rgba(198,255,0,0.3)] transition-all duration-300 backdrop-blur-sm text-center whitespace-nowrap flex-grow md:flex-grow-0"
           >
             CHECK-IN →
           </Link>
